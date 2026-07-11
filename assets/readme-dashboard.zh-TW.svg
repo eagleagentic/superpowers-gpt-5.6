@@ -24,7 +24,7 @@
     <text x="60" y="88" fill="#aab4d0" font-size="16">每次啟動 router，只用必要流程，以新鮮證據完成驗證。</text>
     <rect x="1001" y="45" width="139" height="34" rx="17" fill="#17213d" stroke="#33446f"/>
     <circle cx="1024" cy="62" r="5" fill="#6ee7b7"/>
-    <text x="1038" y="68" fill="#d7e2ff" font-size="13" font-weight="650">CODEX-NATIVE</text>
+    <text x="1038" y="67" fill="#d7e2ff" font-size="12" font-weight="650">CODEX-NATIVE</text>
 
     <g>
       <rect x="60" y="118" width="340" height="105" rx="16" fill="#151d35" stroke="#283657"/>
