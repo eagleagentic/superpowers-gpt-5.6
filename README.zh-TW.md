@@ -13,9 +13,15 @@
 
 ![GPT-5.6 Sol Superpowers 儀表板，呈現 14 個 skills、3,612 words、精簡 80.5% 及 adaptive routing 流程](assets/readme-dashboard.zh-TW.svg)
 
-這是針對 Codex 與 GPT-5.6 Sol 調整的 [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills) 版本。它保留能改善成果的工程紀律，同時移除現代 Codex 已能原生處理的流程負擔。
+這個 repository 是 [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills) 的 Codex-native 版本，專為 GPT-5.6 Sol 調整。
 
-> **關鍵差異：** `using-superpowers` 會在每次對話開始時啟動，但它是輕量 router，不是 mandatory process chain。
+## 為何建立這個 repository
+
+我們的團隊最初直接使用 obra/superpowers。在日常 Codex CLI 與 GPT-5.6 Sol workflows 中，我們實際觀察到 iteration 明顯變慢：mandatory skill activation、較長的指令及固定 process chains 增加了協調 latency 與 token overhead。這是我們在上述 workflows 中的實際使用觀察，不是涵蓋所有平台的通用 latency benchmark。
+
+因此，我們建立這個 tailored edition：保留上游能改善成果的工程紀律，同時配合 Codex 已具備的原生能力。它壓縮 instructions，並以 adaptive routing 只在任務確實受益時載入 process skills，避免不必要的流程。目前 skill bodies 為 **3,612 words，相較上游的 18,516 words 精簡 80.5%**。
+
+> **關鍵差異：** `using-superpowers` 仍會在每次對話開始時啟動，但它是輕量 adaptive router，不是 mandatory process chain。
 
 ## 為何選擇本版
 

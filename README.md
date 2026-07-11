@@ -13,9 +13,15 @@
 
 ![GPT-5.6 Sol Superpowers dashboard showing 14 skills, 3,612 words, an 80.5 percent reduction, and the adaptive routing flow](assets/readme-dashboard.svg)
 
-This Codex-native edition adapts [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills) for GPT-5.6 Sol. It keeps the engineering disciplines that improve outcomes while removing workflow ceremony that modern Codex already handles natively.
+This repository is a Codex-native edition of [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills), tailored for GPT-5.6 Sol.
 
-> **The key difference:** `using-superpowers` starts with every conversation, but it acts as a lightweight router—not a mandatory process chain.
+## Why this repository exists
+
+Our team initially used obra/superpowers directly. In our day-to-day Codex CLI and GPT-5.6 Sol workflows, we observed noticeably slower iteration: mandatory skill activation, longer instructions, and fixed process chains added coordination latency and token overhead. This is an account of our practical experience in those workflows, not a general latency benchmark across every platform.
+
+We created this tailored edition to keep the upstream engineering disciplines that improve outcomes while fitting the capabilities Codex already provides natively. Its instructions are compressed, and its adaptive routing loads process skills only when the task benefits from them instead of imposing unnecessary workflow. The resulting skill bodies contain **3,612 words versus 18,516 upstream—a reduction of 80.5%**.
+
+> **The key difference:** `using-superpowers` still starts with every conversation, but it acts as a lightweight adaptive router—not a mandatory process chain.
 
 ## Why this edition
 
