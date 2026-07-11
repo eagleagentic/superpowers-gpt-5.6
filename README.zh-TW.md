@@ -15,6 +15,62 @@
 
 這個 repository 是 [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills) 的 Codex-native 版本，專為 GPT-5.6 Sol 調整。
 
+## 安裝與快速設定
+
+這個 repository 是包含 14 個 skills 的 bundle。請將 [`skills/superpowers`](skills/superpowers) 下的每個目錄分別安裝成獨立 skill；上層目錄本身不是 skill。
+
+### 人工安裝
+
+以下設定適用於 macOS、Linux、WSL 與 Git Bash。它會將 clone 保留在 discovery directory 之外，再把每個 skill symlink 到 [Codex user skills directory](https://developers.openai.com/codex/skills)：
+
+```bash
+set -eu
+
+repo="$HOME/.agents/superpowers-gpt-5.6"
+skills_dir="$HOME/.agents/skills"
+
+git clone --depth 1 https://github.com/eagleagentic/superpowers-gpt-5.6.git "$repo"
+mkdir -p "$skills_dir"
+
+for skill in "$repo"/skills/superpowers/*; do
+  [ -f "$skill/SKILL.md" ] || continue
+  target="$skills_dir/$(basename "$skill")"
+  if [ -e "$target" ] || [ -L "$target" ]; then
+    echo "Refusing to overwrite existing skill: $target" >&2
+    exit 1
+  fi
+done
+
+for skill in "$repo"/skills/superpowers/*; do
+  [ -f "$skill/SKILL.md" ] || continue
+  ln -s "$skill" "$skills_dir/$(basename "$skill")"
+done
+```
+
+若已存在同名 skill，preflight check 會在建立任何 skill links 前停止，不會覆寫現有安裝。
+
+### 請 AI 安裝
+
+將以下內容貼到 Codex：
+
+```text
+Use $skill-installer to install every direct child directory containing SKILL.md from
+https://github.com/eagleagentic/superpowers-gpt-5.6/tree/main/skills/superpowers.
+Install all 14 skills; do not install skills/superpowers as a single skill.
+```
+
+### 驗證與更新
+
+開啟 `/skills` 並確認 14 個 skills 都已出現，再於新的 turn 中啟用 `$using-superpowers`。Codex 會自動偵測新安裝的 skills；若沒有出現，請重新啟動 Codex。
+
+人工安裝可以使用以下指令更新 clone：
+
+```bash
+git -C "$HOME/.agents/superpowers-gpt-5.6" pull --ff-only
+```
+
+Symlinks 會持續指向更新後的 skill directories。
+
 ## 為何建立這個 repository
 
 我們的團隊最初直接使用 obra/superpowers。在日常 Codex CLI 與 GPT-5.6 Sol workflows 中，我們實際觀察到 iteration 明顯變慢：mandatory skill activation、較長的指令及固定 process chains 增加了協調 latency 與 token overhead。這是我們在上述 workflows 中的實際使用觀察，不是涵蓋所有平台的通用 latency benchmark。

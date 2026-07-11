@@ -15,6 +15,62 @@
 
 This repository is a Codex-native edition of [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills), tailored for GPT-5.6 Sol.
 
+## Install and quick start
+
+This repository contains a bundle of 14 skills. Install each directory directly under [`skills/superpowers`](skills/superpowers) as a separate skill; the parent directory is not itself a skill.
+
+### Install manually
+
+The following setup works in macOS, Linux, WSL, and Git Bash. It keeps the clone outside the discovery directory, then symlinks each skill into the [Codex user skills directory](https://developers.openai.com/codex/skills):
+
+```bash
+set -eu
+
+repo="$HOME/.agents/superpowers-gpt-5.6"
+skills_dir="$HOME/.agents/skills"
+
+git clone --depth 1 https://github.com/eagleagentic/superpowers-gpt-5.6.git "$repo"
+mkdir -p "$skills_dir"
+
+for skill in "$repo"/skills/superpowers/*; do
+  [ -f "$skill/SKILL.md" ] || continue
+  target="$skills_dir/$(basename "$skill")"
+  if [ -e "$target" ] || [ -L "$target" ]; then
+    echo "Refusing to overwrite existing skill: $target" >&2
+    exit 1
+  fi
+done
+
+for skill in "$repo"/skills/superpowers/*; do
+  [ -f "$skill/SKILL.md" ] || continue
+  ln -s "$skill" "$skills_dir/$(basename "$skill")"
+done
+```
+
+The preflight check stops before creating any skill links when a same-named installation already exists.
+
+### Ask an AI to install it
+
+Paste this into Codex:
+
+```text
+Use $skill-installer to install every direct child directory containing SKILL.md from
+https://github.com/eagleagentic/superpowers-gpt-5.6/tree/main/skills/superpowers.
+Install all 14 skills; do not install skills/superpowers as a single skill.
+```
+
+### Verify and update
+
+Open `/skills` and confirm that the 14 skills appear, then invoke `$using-superpowers` in a new turn. Codex detects newly installed skills automatically; restart Codex if they do not appear.
+
+For a manual installation, update the clone with:
+
+```bash
+git -C "$HOME/.agents/superpowers-gpt-5.6" pull --ff-only
+```
+
+The symlinks continue to point at the updated skill directories.
+
 ## Why this repository exists
 
 Our team initially used obra/superpowers directly. In our day-to-day Codex CLI and GPT-5.6 Sol workflows, we observed noticeably slower iteration: mandatory skill activation, longer instructions, and fixed process chains added coordination latency and token overhead. This is an account of our practical experience in those workflows, not a general latency benchmark across every platform.
