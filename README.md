@@ -1,21 +1,33 @@
 # Superpowers for GPT-5.6 Sol
 
-[繁體中文](README.zh-TW.md)
+<p align="center">
+  <strong>A lean, adaptive Superpowers profile built specifically for Codex CLI.</strong>
+</p>
 
-A Codex-native, adaptive edition of [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills), tuned for GPT-5.6 Sol. It keeps the original project's strongest engineering disciplines while removing workflow ceremony that modern Codex already handles natively.
+<p align="center">
+  <a href="README.zh-TW.md">繁體中文</a> ·
+  <a href="GUIDE.md">English Guide</a> ·
+  <a href="GUIDE.zh-TW.md">繁體中文指南</a> ·
+  <a href="skills/superpowers">Browse Skills</a>
+</p>
 
-## Why this version is better for Codex
+![GPT-5.6 Sol Superpowers dashboard showing 14 skills, 3,612 words, an 80.5 percent reduction, and the adaptive routing flow](assets/readme-dashboard.svg)
 
-`using-superpowers` starts with every conversation, so skill routing is always available. The router then loads only the smallest relevant skill set instead of forcing every task through the same design, planning, worktree, TDD, subagent, review, and branch-finishing chain.
+This Codex-native edition adapts [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills) for GPT-5.6 Sol. It keeps the engineering disciplines that improve outcomes while removing workflow ceremony that modern Codex already handles natively.
 
-- **80.5% less skill-body text:** 3,612 words across 14 `SKILL.md` files versus 18,516 upstream.
-- **Codex-native execution:** uses native planning, subagents, approvals, tools, and shared-workspace semantics.
-- **Proportional process:** applies TDD, worktrees, reviews, and delegation when they materially improve the result.
-- **Lower coordination overhead:** keeps straightforward changes inline and delegates only substantial independent work.
-- **Safer authorization boundaries:** preserves user changes and requires authority for destructive or externally visible actions.
-- **No RTK dependency:** examples and validation scripts run with standard commands available in a normal development environment.
+> **The key difference:** `using-superpowers` starts with every conversation, but it acts as a lightweight router—not a mandatory process chain.
 
-## Comparison with obra/superpowers
+## Why this edition
+
+| Adaptive by default | Codex-native | Proportional rigor |
+| :--- | :--- | :--- |
+| Loads the smallest sufficient skill set for the task. | Uses native planning, subagents, approvals, and shared-workspace semantics. | Applies TDD, worktrees, review, and delegation when they materially improve the result. |
+
+| Lean context | Lower coordination cost | Safer boundaries |
+| :--- | :--- | :--- |
+| Uses 3,612 words across 14 skill bodies—80.5% fewer than upstream. | Keeps straightforward work inline and delegates only substantial independent work. | Preserves user changes and requires authority for destructive or externally visible actions. |
+
+## Compared with obra/superpowers
 
 | Area | GPT-5.6 Sol edition | obra/superpowers |
 | --- | --- | --- |
@@ -29,20 +41,22 @@ A Codex-native, adaptive edition of [obra/superpowers](https://github.com/obra/s
 | Verification | Fresh evidence proportional to the claim; avoids duplicate gates | Universal completion gate |
 | Target environment | Codex CLI with GPT-5.6 Sol | Multiple agent harnesses |
 
-The comparison is pinned to upstream commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills) and measured with `wc -w` on the 14 skill bodies on 2026-07-11. This edition is better for its stated Codex target; the upstream project remains the broader cross-harness distribution.
+The comparison is pinned to upstream commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills). Counts were measured with `wc -w` across the 14 `SKILL.md` files on 2026-07-11: **3,612 words here versus 18,516 upstream**.
 
-## What's included
+## Explore the skills
 
-The tailored bundle lives in [`skills/superpowers`](skills/superpowers). See its [short profile](skills/superpowers/README.md) and [Traditional Chinese skill guide](skills/superpowers/GUIDE.md) for routing details and the full skill index.
+- Read the [English skill guide](GUIDE.md) or [Traditional Chinese guide](GUIDE.zh-TW.md).
+- Browse the tailored bundle in [`skills/superpowers`](skills/superpowers).
+- Review the always-on router in [`using-superpowers`](skills/superpowers/using-superpowers/SKILL.md).
 
-Validate the skill metadata, shell syntax, and context budget after making changes. The bundle-level budget check is:
+Validate the context budget after changing the bundle:
 
 ```bash
 bash skills/superpowers/check-context-budget.sh
 ```
 
-`skills/superpowers/sync-skills.sh` intentionally refuses to overwrite this profile unless `--replace-tailored` is passed.
+The sync script protects this tailored profile and requires an explicit `--replace-tailored` flag before replacing it with upstream skills.
 
 ## Upstream credit
 
-This project is adapted from Jesse Vincent's [obra/superpowers](https://github.com/obra/superpowers). The narrower Codex focus, adaptive routing policy, compressed instructions, and Codex-specific tooling in this repository are the reasons to use this edition with GPT-5.6 Sol.
+This project is adapted from Jesse Vincent's [obra/superpowers](https://github.com/obra/superpowers). The narrower Codex focus, adaptive routing policy, compressed instructions, and Codex-specific tooling are what make this edition a better fit for GPT-5.6 Sol.

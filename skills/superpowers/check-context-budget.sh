@@ -47,7 +47,7 @@ support_total=0
 printf '\n%-52s %s\n' "ON-DEMAND MARKDOWN" "WORDS"
 while IFS= read -r file; do
   case "$(basename "$file")" in
-    SKILL.md|GUIDE.md|README.md) continue ;;
+    SKILL.md) continue ;;
   esac
 
   read -r words _ < <(wc -w "$file")
