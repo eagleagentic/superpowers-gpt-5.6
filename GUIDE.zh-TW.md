@@ -22,6 +22,60 @@
 | [`writing-plans`](skills/superpowers/writing-plans/SKILL.md) | 產生 durable implementation plan | 使用者要求計畫，或複雜工作需要可恢復、跨 session 的 handoff 時。 |
 | [`writing-skills`](skills/superpowers/writing-skills/SKILL.md) | 維護 Codex 版 Superpowers skills | 使用者明確點名 `writing-skills`，或要求維護這份 bundle 時；一般 skill authoring 使用 Codex 內建 `skill-creator`。 |
 
+## 使用範例
+
+以下是起點，不是強制串接的流程。描述你想達成的結果，Codex 會選擇真正有幫助的最小 workflow。
+
+### 1. 我不確定該用哪個 skill
+
+```text
+我需要修改登入流程。請先檢查 repository，找出風險與模糊處，並在編輯前告訴我會使用哪個 workflow。
+```
+
+`using-superpowers` 會替任務路由。如果需求確實不清楚，可能加入 `brainstorming`；否則會 inline 完成，避免引入無關流程。
+
+### 2. 測試或行為正在失敗
+
+```text
+空頁面的分頁測試會間歇性失敗。請重現問題、追蹤根因、做最小修正，並執行回歸檢查。
+```
+
+`systematic-debugging` 負責蒐集證據與測試假設。如果 repository 有實用的 test harness，且修正會改變可觀察行為，再加入 `test-driven-development`。
+
+### 3. 我需要有證據的 review
+
+```text
+請 review 我未暫存的變更，檢查資料遺失、公共契約與缺少測試的風險。不要修改檔案；請以檔案與行號證據回報可執行的 findings。
+```
+
+`requesting-code-review` 會讓 review 保持唯讀且聚焦。收到 review 後，使用 `receiving-code-review` 對照 repository 驗證 findings，再套用有依據的修正。
+
+### 4. 變更已經可以交付
+
+```text
+實作已完成。請用新鮮證據驗證完成聲明、記錄 implementation log，並準備已獲授權的 branch 交付。
+```
+
+`verification-before-completion` 蒐集新鮮證據，`writing-implementation-logs` 記錄結果，`finishing-a-development-branch` 只在已獲授權時處理 commit、push 或其他交付動作。
+
+### 完整 walkthrough：加入報表匯出
+
+先用一個以結果為中心的請求開始：
+
+```text
+請為既有報表加入 CSV 匯出。先釐清重要的設計問題並寫出 durable plan，再用聚焦測試完成實作、驗證最終行為，最後摘要變更內容。
+```
+
+預期流程如下：
+
+1. `using-superpowers` 路由請求；只有 delimiter、escaping 或輸出責任等重要選擇才交給 `brainstorming` 釐清。
+2. `writing-plans` 記錄 acceptance criteria 與驗證策略。plan 建立前不要開始實作。
+3. 獲得實作授權後，`executing-plans` 逐項完成 outcomes。如果 repository 的 test harness 能測試匯出行為，就使用 `test-driven-development`。
+4. 執行聚焦測試與 repository 要求的檢查，並把實際 diff 與 plan、acceptance criteria 對照。
+5. `writing-implementation-logs` 記錄已驗證的結果。只有在 commit 或 push 獲授權時才使用 `finishing-a-development-branch`。
+
+如果最後確認只是低風險的一行修改，同一個 router 也可以選擇更簡單的 inline 路徑，不會強迫使用完整流程。
+
 ## Model 選擇與 delegation
 
 Runtime skills 維持 model-family neutral。以 `/model` 選擇目前使用的 model；此 profile 支援 `gpt-5.6-sol`、`gpt-5.6-terra` 與 `gpt-5.6-luna`。請以 [API pricing](https://developers.openai.com/api/docs/pricing)、[latest-model](https://developers.openai.com/api/docs/guides/latest-model)、[prompt-caching](https://developers.openai.com/api/docs/guides/prompt-caching)、[ChatGPT models](https://learn.chatgpt.com/docs/models) 與 [subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents) 文件確認目前的可用性、價格與 caching 指引。

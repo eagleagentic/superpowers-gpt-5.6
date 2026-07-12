@@ -22,6 +22,60 @@ This adaptive profile is tailored for Codex CLI and the GPT-5.6 family. Skills a
 | [`writing-plans`](skills/superpowers/writing-plans/SKILL.md) | Produce a durable implementation plan | Use when the user requests a plan or complex work needs a resumable, cross-session handoff. |
 | [`writing-skills`](skills/superpowers/writing-skills/SKILL.md) | Maintain the Codex Superpowers bundle | Use when the user names `writing-skills` or asks to maintain this bundle; use Codex's built-in `skill-creator` for general skill authoring. |
 
+## Usage examples
+
+These are starting points, not mandatory chains. Describe the outcome you want; Codex selects the smallest workflow that materially helps.
+
+### 1. I am not sure which skill applies
+
+```text
+I need to change the login flow. Inspect the repository, identify the risks and ambiguities, and tell me which workflow you will use before editing.
+```
+
+`using-superpowers` routes the task. If the requirements are genuinely unclear, it may add `brainstorming`; otherwise it keeps the work inline and avoids unrelated process.
+
+### 2. A test or behavior is failing
+
+```text
+The empty-page pagination test fails intermittently. Reproduce it, trace the root cause, make the smallest fix, and run a regression check.
+```
+
+`systematic-debugging` drives evidence collection and hypothesis tests. Add `test-driven-development` when the repository has a practical test harness and the fix changes observable behavior.
+
+### 3. I want an evidence-based review
+
+```text
+Review my unstaged changes for data-loss, public-contract, and missing-test risks. Do not edit files; report actionable findings with file and line evidence.
+```
+
+`requesting-code-review` keeps the review read-only and focused. After review, use `receiving-code-review` to verify findings against the repository before applying supported fixes.
+
+### 4. The change is ready to hand off
+
+```text
+The implementation is complete. Verify the claims, record the implementation log, and prepare the authorized branch delivery.
+```
+
+`verification-before-completion` gathers fresh evidence, `writing-implementation-logs` records the result, and `finishing-a-development-branch` handles commit, push, or other delivery actions only when authorized.
+
+### Complete walkthrough: add a report export
+
+Start with one outcome-oriented request:
+
+```text
+Add CSV export for the existing report. First resolve any material design questions and write a durable plan, then implement it with focused tests, verify the final behavior, and summarize what changed.
+```
+
+The expected flow is:
+
+1. `using-superpowers` routes the request; `brainstorming` resolves only material choices such as delimiter, escaping, or output ownership.
+2. `writing-plans` records the acceptance criteria and verification strategy. Do not start implementation until the plan exists.
+3. With implementation authorized, `executing-plans` works through the outcomes. `test-driven-development` is used if the repository's test harness can exercise the export behavior.
+4. Run focused tests and the repository's required checks. Reconcile the actual diff with the plan and acceptance criteria.
+5. `writing-implementation-logs` records the verified outcome. Use `finishing-a-development-branch` only if commit or push is authorized.
+
+If the task turns out to be a one-line, low-risk change, the same router can choose a simpler inline path instead of forcing this full sequence.
+
 ## Model selection and delegation
 
 Runtime skills remain model-family neutral. Select the active model with `/model`; this profile supports `gpt-5.6-sol`, `gpt-5.6-terra`, and `gpt-5.6-luna`. Check current availability, pricing, and caching guidance in the [API pricing](https://developers.openai.com/api/docs/pricing), [latest-model](https://developers.openai.com/api/docs/guides/latest-model), and [prompt-caching](https://developers.openai.com/api/docs/guides/prompt-caching) documentation, plus the [ChatGPT model](https://learn.chatgpt.com/docs/models) and [subagent](https://learn.chatgpt.com/docs/agent-configuration/subagents) references.
