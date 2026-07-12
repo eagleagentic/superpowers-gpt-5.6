@@ -27,7 +27,7 @@ description: "Turn ambiguous, high-impact product or system ideas into a concise
 - Decompose independent subsystems before designing them in detail.
 - Pause when required authority, external coordination, or a consequential user choice is missing.
 - Read `visual-companion.md` only when the user explicitly requests the visual companion.
-- Write or commit a design document only when the user or repository instructions require it.
+- For persistent design, trigger `writing-plans` and record the chosen design and acceptance before implementation. Any native plan requires a durable task file; if writes are forbidden, create it as the first permitted mutation.
 
 ## Evidence
 

@@ -1,42 +1,35 @@
 ---
 name: writing-plans
-description: Create a concise, durable implementation plan with outcomes, ownership, dependencies, and verification. Use only when the user asks for a plan, work needs a resumable handoff, or dependent steps are too complex for a short native plan; do not use for routine implementation.
+description: Create mandatory durable plans. Use after any explicit/native planning and for complex, important, high-risk, dependent, cross-system, isolated, destructive, or long-running work; skip low-risk single-path work.
 ---
 
 # Writing Plans
 
-Prefer Codex's native plan for ordinary multi-step work. Write a plan document only when it will remain useful after the current turn.
+Any explicit or native planning makes a durable task file mandatory. A native plan may track session progress but never substitutes for that file.
 
-## Build the Plan
+1. Read the nearest `AGENTS.md`, requirements, relevant code, and repository documentation convention.
+2. Inspect `./superpowers/docs/plans/` for a plan in the same scope; otherwise create `./superpowers/docs/plans/YYYY-MM-DD-<slug>.md`.
+3. If Plan Mode forbids writes, name the target path and create it as the first permitted repository mutation before implementation.
+4. Resolve material ambiguity, then record the smallest set of independently verifiable outcomes.
 
-1. Read the nearest `AGENTS.md`, the requirements, and the relevant code before planning.
-2. State material assumptions and resolve ambiguities that would change scope or architecture.
-3. Define the smallest set of independently verifiable outcomes, usually three to seven tasks.
-4. Save the document only when the user requested it or another session needs it. Honor the user's path; otherwise use `docs/superpowers/plans/YYYY-MM-DD-<feature>.md`.
-
-Use this compact structure:
+Use this structure:
 
 ```markdown
-# <Feature> Implementation Plan
+# <Task title>
+
+## Plan
 
 **Goal:** <one sentence>
-**Constraints:** <only binding project requirements>
+**Why planning is required:** <material trigger>
 **Acceptance:** <observable completion criteria>
 
-### Task N: <outcome>
-- Files: <create/modify/test paths>
-- Interfaces: <only cross-task contracts or ownership boundaries>
+### Outcome N: <result>
 - Work: <what must become true>
 - Verify: `<repo-specific command>`
 ```
 
-Keep plans implementation-guiding, not implementation-duplicating:
+Keep it implementation-guiding: omit source code, routine imports, predicted output, repeated boilerplate, artificial microsteps, and per-step commits. Include exact contracts only when another outcome depends on them.
 
-- Do not include complete source code, routine imports, predicted test output, or repeated boilerplate.
-- Do not split work into artificial two-minute steps or require a commit per step.
-- Include exact signatures, data shapes, migrations, or error contracts only when another task depends on them.
-- Follow repository conventions for testing, branching, command wrappers, and commits.
+Review once for requirement coverage, dependency order, scope creep, and unverifiable outcomes. Before continuing after material requirement, design, scope, review, or verification-strategy changes, update the same plan and preserve the original intent.
 
-Review the plan once for requirement coverage, dependency order, scope creep, and unverifiable tasks. Fix issues inline.
-
-If the user requested implementation, continue directly and track progress with the native plan. Delegate only independent work whose saved time exceeds the handoff cost; do not force an execution menu.
+Do not create a plan for simple work merely to satisfy process. Once any plan exists, however, never downgrade the durable requirement. If implementation is authorized, continue through the loaded lifecycle; completion writes the matching Implementation Log in `./superpowers/docs/logs/`.

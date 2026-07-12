@@ -22,6 +22,7 @@ description: "Create or reuse an isolated Git worktree for risky or concurrent i
 5. Create a dedicated branch and worktree without disturbing existing changes.
 6. Run only repository-documented setup commands; avoid blind dependency installation or lockfile mutation.
 7. Run a cheap, relevant baseline check before implementation.
+8. For persistent work, satisfy documentation readiness inside the worktree before implementation, configuration, or test edits; synchronize material deviations before continuing.
 
 ## Escalation
 
@@ -33,4 +34,5 @@ description: "Create or reuse an isolated Git worktree for risky or concurrent i
 ## Evidence
 
 - Report the worktree path, branch, setup performed, baseline command, result, and known pre-existing failures.
+- Report the canonical record path used for persistent work.
 - Confirm that the original checkout and user changes remain untouched.

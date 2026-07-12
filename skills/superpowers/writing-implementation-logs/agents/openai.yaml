@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implementation Logs"
+  short_description: "Write concise verified implementation completion logs"
+  default_prompt: "Use $writing-implementation-logs to record a completed implementation concisely."

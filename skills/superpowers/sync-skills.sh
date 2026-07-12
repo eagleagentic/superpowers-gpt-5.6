@@ -68,7 +68,7 @@ require_replace_tailored() {
     return
   fi
 
-  echo "Refusing to replace the tailored Codex CLI and GPT-5.6 Sol profile." >&2
+  echo "Refusing to replace the tailored Codex CLI and GPT-5.6 family profile." >&2
   echo "Pass --replace-tailored to overwrite it with upstream skills." >&2
   exit 2
 }

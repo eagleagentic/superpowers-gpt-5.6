@@ -1,19 +1,19 @@
 ---
 name: writing-skills
-description: Maintains the Codex-focused Superpowers skill bundle. Use only when the user explicitly names writing-skills or asks to maintain the Superpowers skill bundle; use Codex's built-in skill-creator for general skill creation or editing.
+description: Maintain the Codex-focused Superpowers bundle. Use only when the user names writing-skills or asks to maintain this bundle; use Codex's built-in skill-creator for general skill authoring.
 ---
 
 # Maintaining Superpowers Skills
 
-This is a compatibility layer for the tailored Codex CLI and GPT-5.6 Sol bundle. For ordinary skill authoring, stop here and use Codex's built-in `skill-creator`; it is the current source of truth for skill format and validation.
+Use Codex's built-in `skill-creator` as the source of truth for format and validation.
 
 ## Workflow
 
 1. Read the nearest `AGENTS.md` and the built-in `skill-creator` completely.
-2. Inspect only the target skill, its directly referenced resources, and relevant tests. Preserve unrelated work.
-3. Keep YAML frontmatter to lowercase hyphenated `name` plus a `description` that states both capability and precise trigger. Match the folder name to `name`.
-4. Keep `SKILL.md` procedural and concise. Assume GPT-5.6 Sol already understands general engineering practices.
-5. Use progressive disclosure: put optional detail in `references/`, deterministic operations in `scripts/`, and output material in `assets/`. Link each resource only where it is needed.
+2. Inspect the target and direct resources. For bundle-wide policy changes, audit every skill and support resource before choosing edits. Preserve unrelated work.
+3. In each description, front-load a discriminative leading phrase and keep one trigger per independent invocation branch. Delete synonymous triggers and body summaries.
+4. Keep only non-obvious procedure in `SKILL.md`. Inline material every branch needs; disclose branch-only detail through a precise pointer to `references/`, `scripts/`, or `assets/`.
+5. Delete duplication, stale sediment, and model-relative no-ops. Keep runtime guidance family-neutral; put volatile model, pricing, and caching facts in the GUIDE with official links. Retain only behavior or necessary guardrails.
 6. Validate every changed skill:
 
    ```bash
@@ -21,5 +21,5 @@ This is a compatibility layer for the tailored Codex CLI and GPT-5.6 Sol bundle.
    ```
 
 7. For this bundle, also run `bash skills/superpowers/check-context-budget.sh` and relevant script syntax checks.
-8. Forward-test only for trigger changes, high-risk mandatory behavior, or a demonstrated model failure. Start with one fresh independent task; expand only when evidence is ambiguous.
+8. Forward-test trigger changes and high-risk behavior in fresh independent sessions. Start with a discriminating case; expand only when evidence is ambiguous, and revert wording that changes no observable behavior.
 9. Report changed files, verification output, and any untested risk.

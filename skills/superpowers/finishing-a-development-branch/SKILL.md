@@ -11,7 +11,9 @@ Follow explicit user instructions and the nearest `AGENTS.md`; do not impose a f
 
 Inspect the actual state with read-only commands such as `git status --short`, `git branch --show-current`, and `git worktree list`. Preserve unrelated user changes.
 
-Confirm required checks passed on the current HEAD. Reuse fresh evidence for an unchanged HEAD; rerun checks after code changes or integration. Never finish with failing required checks.
+Confirm checks pass and canonical reconciliation is fresh for the exact state to commit or push. Missing or stale reconciliation blocks both actions.
+
+Any later relevant mutation invalidates affected evidence and reconciliation; refresh both before continuing.
 
 ## Complete the Authorized Action
 
@@ -25,4 +27,4 @@ Confirm required checks passed on the current HEAD. Reuse fresh evidence for an 
 
 Never offer discard routinely. If requested, show the exact branch, unique commits, uncommitted files, and worktree path that would be lost. Require confirmation containing `discard` before deleting them. Approval applies only to the named target.
 
-After the authorized action, report the checks run, commit or branch state, remote action, and anything deliberately preserved. Use repository command wrappers for every shell command.
+After the authorized action, report the canonical record, checks run, commit or branch state, remote action, and anything deliberately preserved. Use repository command wrappers for every shell command.

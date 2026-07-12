@@ -6,7 +6,9 @@
 # under /tmp (ephemeral). Persistent directories (.superpowers/) are
 # kept so mockups can be reviewed later.
 
-SESSION_DIR="$1"
+set -euo pipefail
+
+SESSION_DIR="${1:-}"
 
 if [[ -z "$SESSION_DIR" ]]; then
   echo '{"error": "Usage: stop-server.sh <session_dir>"}'
@@ -71,7 +73,7 @@ is_brainstorm_server() {
 }
 
 if [[ -f "$PID_FILE" ]]; then
-  pid=$(cat "$PID_FILE")
+  pid="$(cat "$PID_FILE" 2>/dev/null || true)"
 
   # Refuse to signal a PID we can't prove is our server. A stale pid file may
   # point at an unrelated process after a reboot/PID wraparound.

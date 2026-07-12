@@ -1,4 +1,4 @@
-# 適用於 GPT-5.6 Sol 的 Superpowers
+# 適用於 GPT-5.6 的 Superpowers
 
 <p align="center">
   <strong>專為 Codex CLI 打造的精簡、adaptive Superpowers profile。</strong>
@@ -11,13 +11,13 @@
   <a href="skills/superpowers">瀏覽 Skills</a>
 </p>
 
-![GPT-5.6 Sol Superpowers 儀表板，呈現 14 個 skills、3,612 words、精簡 80.5% 及 adaptive routing 流程](assets/readme-dashboard.zh-TW.svg)
+![GPT-5.6 Superpowers 儀表板，呈現 13 個 skills、3,357 words、精簡 81.9% 及 adaptive routing 流程](assets/readme-dashboard.zh-TW.svg)
 
-這個 repository 是 [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills) 的 Codex-native 版本，專為 GPT-5.6 Sol 調整。
+這個 repository 是 [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills) 的 Codex-native 版本，專為 GPT-5.6 family 調整。
 
 ## 安裝與快速設定
 
-這個 repository 是包含 14 個 skills 的 bundle。請將 [`skills/superpowers`](skills/superpowers) 下的每個目錄分別安裝成獨立 skill；上層目錄本身不是 skill。
+這個 repository 是包含 13 個 skills 的 bundle。請將 [`skills/superpowers`](skills/superpowers) 下的每個目錄分別安裝成獨立 skill；上層目錄本身不是 skill。
 
 ### 人工安裝
 
@@ -56,12 +56,12 @@ done
 ```text
 Use $skill-installer to install every direct child directory containing SKILL.md from
 https://github.com/eagleagentic/superpowers-gpt-5.6/tree/main/skills/superpowers.
-Install all 14 skills; do not install skills/superpowers as a single skill.
+Install all 13 skills; do not install skills/superpowers as a single skill.
 ```
 
 ### 驗證與更新
 
-開啟 `/skills` 並確認 14 個 skills 都已出現，再於新的 turn 中啟用 `$using-superpowers`。Codex 會自動偵測新安裝的 skills；若沒有出現，請重新啟動 Codex。
+開啟 `/skills` 並確認 13 個 skills 都已出現，再於新的 turn 中啟用 `$using-superpowers`。Codex 會自動偵測新安裝的 skills；若沒有出現，請重新啟動 Codex。
 
 人工安裝可以使用以下指令更新 clone：
 
@@ -73,37 +73,39 @@ Symlinks 會持續指向更新後的 skill directories。
 
 ## 為何建立這個 repository
 
-我們的團隊最初直接使用 obra/superpowers。在日常 Codex CLI 與 GPT-5.6 Sol workflows 中，我們實際觀察到 iteration 明顯變慢：mandatory skill activation、較長的指令及固定 process chains 增加了協調 latency 與 token overhead。這是我們在上述 workflows 中的實際使用觀察，不是涵蓋所有平台的通用 latency benchmark。
+我們的團隊最初直接使用 obra/superpowers。在日常 Codex CLI 與 GPT-5.6 family workflows 中，我們實際觀察到 iteration 明顯變慢：mandatory skill activation、較長的指令及固定 process chains 增加了協調 latency 與 token overhead。這是我們在上述 workflows 中的實際使用觀察，不是涵蓋所有平台的通用 latency benchmark。
 
-因此，我們建立這個 tailored edition：保留上游能改善成果的工程紀律，同時配合 Codex 已具備的原生能力。它壓縮 instructions，並以 adaptive routing 只在任務確實受益時載入 process skills，避免不必要的流程。目前 skill bodies 為 **3,612 words，相較上游的 18,516 words 精簡 80.5%**。
+因此，我們建立這個 tailored edition：保留上游能改善成果的工程紀律，同時配合 Codex 已具備的原生能力。它壓縮 instructions，並以 adaptive routing 只在任務確實受益時載入 process skills，避免不必要的流程。目前 skill bodies 為 **3,357 words，相較上游的 18,516 words 精簡 81.9%**。
 
 > **關鍵差異：** `using-superpowers` 仍會在每次對話開始時啟動，但它是輕量 adaptive router，不是 mandatory process chain。
+
+> **Delegation 邊界：** Codex Ultra 預設提供 native subagent delegation，因此這個 bundle 移除獨立的 agent-dispatch skills 與 templates，不重複 Codex 的 orchestration layer。
 
 ## 為何選擇本版
 
 | Adaptive by default | Codex-native | 與風險成比例的嚴謹度 |
 | :--- | :--- | :--- |
-| 只載入完成任務所需的最小 skill set。 | 使用原生 planning、subagents、approvals 與 shared-workspace semantics。 | 只有在能實質改善成果時才使用 TDD、worktrees、review 與 delegation。 |
+| 只載入完成任務所需的最小 skill set。 | 使用原生 planning、Codex Ultra subagent delegation、approvals 與 shared-workspace semantics。 | 只有在能實質改善成果時才使用 TDD、worktrees 與 review。 |
 
 | 精簡 context | 更低的協調成本 | 更安全的授權邊界 |
 | :--- | :--- | :--- |
-| 14 個 skill bodies 合計 3,612 words，比上游少 80.5%。 | 簡單工作由主 agent inline 完成，只委派具實質工作量的獨立工作。 | 保留使用者既有變更；破壞性或對外可見的操作必須先取得授權。 |
+| 13 個 skill bodies 合計 3,357 words，比上游少 81.9%。 | 簡單工作由主 agent inline 完成；Codex Ultra 負責 native delegation。 | 保留使用者既有變更；破壞性或對外可見的操作必須先取得授權。 |
 
 ## 與 obra/superpowers 比較
 
-| 面向 | GPT-5.6 Sol 版本 | obra/superpowers |
+| 面向 | GPT-5.6 family 版本 | obra/superpowers |
 | --- | --- | --- |
 | 對話開始 | 每次啟動輕量 skill router | 每次檢查並啟用適用 skills |
 | Skill 選擇 | 最小充分集合，不自動串接固定流程 | Mandatory workflows 與有序 skill transitions |
 | Brainstorming | 用於模糊且高影響的選擇 | 所有 creative 或 behavior-changing 任務開始前都必須使用 |
 | Planning | 一般工作使用原生 planning；需要 handoff 才寫 durable plan | 完整計畫、細粒度步驟與頻繁 commits |
 | TDD | 適用於可測試行為且 repository 有實用 test harness 時 | 幾乎所有 feature、fix 與 refactor 的 hard gate |
-| Subagents 與 review | 依風險與實際工作量啟用 | Fresh agents 與 staged reviews 是預設流程核心 |
+| Subagents 與 review | Codex Ultra 負責 native delegation；bundle 不提供 dispatch templates | Fresh agents 與 staged reviews 是預設流程核心 |
 | Worktrees 與交付 | 明確要求或隔離有實質價值時才建立 | 標準 implementation workflow 的一部分 |
 | Verification | 使用與聲明相稱的新鮮證據，避免重複 gates | Universal completion gate |
-| 目標環境 | Codex CLI 與 GPT-5.6 Sol | 多種 agent harnesses |
+| 目標環境 | Codex CLI 與 GPT-5.6 family | 多種 agent harnesses |
 
-比較基準固定為上游 commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills)。2026-07-11 使用 `wc -w` 量測雙方 14 個 `SKILL.md`：**本版 3,612 words，上游 18,516 words**。
+比較基準固定為上游 commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills)。2026-07-13 使用 `wc -w` 量測雙方 13 個 `SKILL.md`：**本版 3,357 words，上游 18,516 words**。
 
 ## 探索 Skills
 
@@ -121,4 +123,4 @@ Sync script 會保護這份 tailored profile；只有明確傳入 `--replace-tai
 
 ## 上游致謝
 
-本專案改作自 Jesse Vincent 的 [obra/superpowers](https://github.com/obra/superpowers)。更聚焦的 Codex 定位、adaptive routing policy、精簡指令與 Codex-specific tooling，正是本版更適合 GPT-5.6 Sol 的原因。
+本專案改作自 Jesse Vincent 的 [obra/superpowers](https://github.com/obra/superpowers)。更聚焦的 Codex 定位、adaptive routing policy、精簡指令與 Codex-specific tooling，正是本版更適合 GPT-5.6 family 的原因。

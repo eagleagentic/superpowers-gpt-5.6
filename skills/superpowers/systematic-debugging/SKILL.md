@@ -19,8 +19,9 @@ description: "Diagnose technical failures with evidence-driven root-cause analys
 2. Inspect only relevant evidence: recent diffs, the failing path, configuration, data origin, dependencies, and a working analogue when useful. Read [root-cause-tracing.md](root-cause-tracing.md) only when the value or side effect crosses multiple callers.
 3. State one falsifiable root-cause hypothesis and the evidence supporting it.
 4. Run the cheapest discriminating check. Change one variable at a time.
-5. Apply the smallest fix at the demonstrated source. Avoid bundled improvements.
-6. Add a focused regression test when practical, then rerun the original reproduction and proportionate regression checks.
+5. Before an authorized persistent fix or test edit, satisfy documentation readiness. Synchronize material root-cause-driven deviations before continuing.
+6. Apply the smallest fix at the demonstrated source. Avoid bundled improvements.
+7. Add a focused regression test when practical, then rerun the original reproduction and proportionate regression checks.
 
 ## Escalation
 
@@ -34,4 +35,4 @@ description: "Diagnose technical failures with evidence-driven root-cause analys
 ## Evidence
 
 - Capture the before-and-after reproduction, confirmed hypothesis, relevant command results, and remaining uncertainty.
-- Claim resolution only from verification run after the final relevant change.
+- Claim resolution only after final verification and durable reconciliation; later relevant mutations invalidate both.

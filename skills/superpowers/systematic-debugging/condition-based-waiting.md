@@ -35,8 +35,6 @@ async function waitFor<T>(
 const result = await waitFor(getResult, value => value !== undefined, 'result');
 ```
 
-Read [condition-based-waiting-example.ts](condition-based-waiting-example.ts) only when event-specific helpers such as event matching or event counts are needed.
-
 ## Keep Real Timing Tests Explicit
 
 Use a fixed delay only when elapsed time is the behavior under test, such as debounce, throttle, retry backoff, or periodic output. First wait for the triggering condition, derive the delay from the specified timing, and document why that duration is required.

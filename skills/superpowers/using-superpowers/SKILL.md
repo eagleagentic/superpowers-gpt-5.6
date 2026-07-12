@@ -1,34 +1,23 @@
 ---
 name: using-superpowers
-description: "Use when starting any conversation to select the smallest relevant Codex skill set before responding or acting."
+description: "Mandatory router. Require durable plans after any planning, concise logs after implementation, and fresh reconciliation before completion, commit, or push."
 ---
 
-## Trigger
+# Router
 
-- Invoke a user-named skill.
-- Invoke a skill whose description clearly matches the requested work.
+Classify every turn:
 
-## Skip
+- **Conversation/read-only:** no persistent change.
+- **Simple implementation:** low-risk, reversible, one direct path.
+- **Planned work:** an explicit/native plan exists, or complexity, risk, dependencies, isolation, or duration justify one.
+- **Completion-awaiting-log:** implementation exists; verification, log, or reconciliation is stale.
 
-- Skip speculative matches and routine Q&A, status, or read-only inspection that does not match a review or diagnostic skill.
-- Skip discovery for a bounded subagent task unless the parent names a skill.
+Select `writing-plans` for planned work. Any Codex Plan Mode or native plan makes a durable task file mandatory. If Plan Mode forbids writes, create it as the first permitted repository mutation. Do not plan simple work merely to satisfy process.
 
-## Core Loop
+Before persistent mutation, read and apply [Durable Development Lifecycle](references/durable-development.md). After the whole implementation and fresh primary verification, select `writing-implementation-logs`; skip logs for read-only, plan-only, blocked, or no-diff work.
 
-1. Select the smallest sufficient skill set.
-2. Read each selected skill once before acting.
-3. Announce the skill and purpose briefly.
-4. Follow only instructions relevant to the current scope.
-5. Trust GPT-5.6 Sol and Codex CLI for ordinary reasoning, exploration, and tool selection.
+Before completion, commit, or push, reopen the task file and compare it with the actual diff and fresh evidence.
 
-## Escalation
+Keep active model and reasoning effort. Recommend `/model` only for material quality or cost benefit; never launch nested Codex to simulate a switch.
 
-- Add another skill only when new work independently matches its description.
-- Never chain process skills automatically.
-- Read `references/codex-tools.md` only when Codex agent or worktree mechanics are needed.
-- Follow system, developer, user, and repository instructions before skill guidance.
-
-## Evidence
-
-- Keep usage observable through the initial announcement.
-- Report any skill-caused pause or blocker explicitly.
+Match descriptions, honor named skills, read selected skills, and avoid unrelated process chains. Inspect first; follow higher-priority and repository instructions.

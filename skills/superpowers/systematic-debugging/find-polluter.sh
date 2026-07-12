@@ -3,7 +3,7 @@
 # Usage: ./find-polluter.sh <file_or_dir_to_check> <test_pattern>
 # Example: ./find-polluter.sh '.git' 'src/**/*.test.ts'
 
-set -e
+set -euo pipefail
 
 if [ $# -ne 2 ]; then
   echo "Usage: $0 <file_to_check> <test_pattern>"
@@ -13,20 +13,31 @@ fi
 
 POLLUTION_CHECK="$1"
 TEST_PATTERN="$2"
+if [[ "$TEST_PATTERN" != ./* ]]; then
+  TEST_PATTERN="./$TEST_PATTERN"
+fi
 
 echo "🔍 Searching for test that creates: $POLLUTION_CHECK"
 echo "Test pattern: $TEST_PATTERN"
 echo ""
 
-# Get list of test files
-TEST_FILES=$(find . -path "$TEST_PATTERN" | sort)
-TOTAL=$(echo "$TEST_FILES" | wc -l | tr -d ' ')
+# Get the test files without splitting paths that contain whitespace.
+TEST_FILES=()
+while IFS= read -r -d '' test_file; do
+  TEST_FILES+=("$test_file")
+done < <(find . -path "$TEST_PATTERN" -print0)
+TOTAL=${#TEST_FILES[@]}
 
 echo "Found $TOTAL test files"
 echo ""
 
+if [[ "$TOTAL" -eq 0 ]]; then
+  echo "No test files matched: $TEST_PATTERN"
+  exit 0
+fi
+
 COUNT=0
-for TEST_FILE in $TEST_FILES; do
+for TEST_FILE in "${TEST_FILES[@]}"; do
   COUNT=$((COUNT + 1))
 
   # Skip if pollution already exists
