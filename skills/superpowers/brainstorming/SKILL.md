@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "Turn ambiguous, high-impact product or system ideas into a concise, decision-ready design. Use when the user asks to explore an idea, compare materially different approaches, or resolve important requirements before implementation."
+description: "Resolve ambiguous product or system work before implementation. Use when materially different interpretations would change scope, architecture, or consequential outcomes; skip precise tasks."
 ---
 
 # Brainstorming

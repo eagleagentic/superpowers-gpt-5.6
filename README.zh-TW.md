@@ -1,7 +1,7 @@
 # 適用於 GPT-5.6 的 Superpowers
 
 <p align="center">
-  <strong>專為 Codex CLI 打造的精簡、adaptive Superpowers profile。</strong>
+  <strong>專為 Codex CLI 打造的精簡、newcomer-safe Superpowers profile。</strong>
 </p>
 
 <p align="center">
@@ -11,7 +11,7 @@
   <a href="skills/superpowers">瀏覽 Skills</a>
 </p>
 
-![GPT-5.6 Superpowers 儀表板，呈現 13 個 skills、2,482 words、精簡 86.6% 及 adaptive routing 流程](assets/readme-dashboard.zh-TW.svg)
+![GPT-5.6 Superpowers 儀表板，呈現 13 個 skills、2,691 words、精簡 85.5% 及 newcomer-safe routing 流程](assets/readme-dashboard.zh-TW.svg)
 
 這個 repository 是 [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills) 的 Codex-native 版本，專為 GPT-5.6 family 調整。
 
@@ -75,9 +75,9 @@ Symlinks 會持續指向更新後的 skill directories。
 
 我們的團隊最初直接使用 obra/superpowers。在日常 Codex CLI 與 GPT-5.6 family workflows 中，我們實際觀察到 iteration 明顯變慢：mandatory skill activation、較長的指令及固定 process chains 增加了協調 latency 與 token overhead。這是我們在上述 workflows 中的實際使用觀察，不是涵蓋所有平台的通用 latency benchmark。
 
-因此，我們建立這個 tailored edition：保留上游能改善成果的工程紀律，同時配合 Codex 已具備的原生能力。它壓縮 instructions，並以 adaptive routing 只在任務確實受益時載入 process skills，避免不必要的流程。目前 skill bodies 為 **2,482 words，相較上游的 18,516 words 精簡 86.6%**。
+因此，我們建立這個 tailored edition：保留上游能改善成果的工程紀律，同時配合 Codex 已具備的原生能力。它壓縮 instructions，並由 router 強制所有非 Mechanical implementation 執行輕量核心流程，只在風險足以支持時載入額外 process skills。目前 skill bodies 為 **2,691 words，相較上游的 18,516 words 精簡 85.5%**。
 
-> **關鍵差異：** `using-superpowers` 仍會在每次對話開始時啟動，但它是輕量 adaptive router，不是 mandatory process chain。
+> **關鍵差異：** `using-superpowers` 仍會在每次對話開始時啟動。它強制輕量 implementation loop，而不是強制所有工作建立 durable artifacts。
 
 > **Delegation 邊界：** Codex Ultra 預設提供 native subagent delegation，因此這個 bundle 移除獨立的 agent-dispatch skills 與 templates，不重複 Codex 的 orchestration layer。
 
@@ -85,27 +85,27 @@ Symlinks 會持續指向更新後的 skill directories。
 
 | Adaptive by default | Codex-native | 與風險成比例的嚴謹度 |
 | :--- | :--- | :--- |
-| 只載入完成任務所需的最小 skill set。 | 使用原生 planning、Codex Ultra subagent delegation、approvals 與 shared-workspace semantics。 | 只在明確要求時使用 TDD，並只在有充分理由時使用 worktrees 或 review。 |
+| 即使使用者沒有點名 skills，也會提供安全 workflow defaults。 | 使用原生 planning、Codex Ultra subagent delegation、approvals 與 shared-workspace semantics。 | 非 Mechanical implementation 必須有 plan、focused coverage/checks 與 diff review；再依風險加入 safeguards。 |
 
 | 精簡 context | 更低的協調成本 | 更安全的授權邊界 |
 | :--- | :--- | :--- |
-| 13 個 skill bodies 合計 2,482 words，比上游少 86.6%。 | 簡單工作由主 agent inline 完成；Codex Ultra 負責 native delegation。 | 保留使用者既有變更；破壞性或對外可見的操作必須先取得授權。 |
+| 13 個 skill bodies 合計 2,691 words，比上游少 85.5%。 | 強制核心紀律 inline 執行；durable artifacts 維持風險導向。 | 保留使用者既有變更；破壞性或對外可見的操作必須先取得授權。 |
 
 ## 與 obra/superpowers 比較
 
 | 面向 | GPT-5.6 family 版本 | obra/superpowers |
 | --- | --- | --- |
-| 對話開始 | 每次啟動輕量 skill router | 每次檢查並啟用適用 skills |
-| Skill 選擇 | 最小充分集合，不自動串接固定流程 | Mandatory workflows 與有序 skill transitions |
+| 對話開始 | 每次啟動 newcomer-safe workflow router | 每次檢查並啟用適用 skills |
+| Skill 選擇 | 強制核心 implementation loop；額外 workflows 由風險觸發 | Mandatory workflows 與有序 skill transitions |
 | Brainstorming | 用於模糊且高影響的選擇 | 所有 creative 或 behavior-changing 任務開始前都必須使用 |
-| Planning | 一般工作使用原生 planning；明確要求 artifact、存在重大風險或需要可恢復協作時才寫 durable plan | 完整計畫、細粒度步驟與頻繁 commits |
-| TDD | 只有使用者明確要求或 repository policy 規定時才使用 | 幾乎所有 feature、fix 與 refactor 的 hard gate |
+| Planning | 每個非 Mechanical implementation 都要 brief plan；High-risk 或 resumable coordination 才寫 durable plan | 完整計畫、細粒度步驟與頻繁 commits |
+| TDD | 不需使用者懂術語；便宜的 red test 能區分實作或捕捉已確認 regression 時自動選用 | 幾乎所有 feature、fix 與 refactor 的 hard gate |
 | Subagents 與 review | Codex Ultra 負責 native delegation；bundle 不提供 dispatch templates | Fresh agents 與 staged reviews 是預設流程核心 |
 | Worktrees 與交付 | 明確要求或隔離有實質價值時才建立 | 標準 implementation workflow 的一部分 |
-| Verification | 使用與聲明相稱的新鮮證據，避免重複 gates | Universal completion gate |
+| Verification | 聚焦 checks 與 final diff review 必須執行；獨立 gate 依風險使用 | Universal completion gate |
 | 目標環境 | Codex CLI 與 GPT-5.6 family | 多種 agent harnesses |
 
-比較基準固定為上游 commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills)。2026-07-13 使用 `wc -w` 量測雙方 13 個 `SKILL.md`：**本版 2,482 words，上游 18,516 words**。
+比較基準固定為上游 commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills)。2026-07-13 使用 `wc -w` 量測雙方 13 個 `SKILL.md`：**本版 2,691 words，上游 18,516 words**。
 
 ## 探索 Skills
 

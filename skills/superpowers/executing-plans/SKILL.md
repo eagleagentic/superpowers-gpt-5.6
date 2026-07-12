@@ -1,9 +1,11 @@
 ---
 name: executing-plans
-description: Execute an authorized multi-step or durable implementation plan in the active session. Use when dependent outcomes need tracking; skip short routine checklists that Codex can execute directly.
+description: Execute an existing plan when implementation is authorized and dependent outcomes need tracking; skip short routine checklists.
 ---
 
 # Executing Plans
+
+A plan's existence or approval to plan does not authorize implementation. Without implementation authority, inspect and report only.
 
 1. Read the plan, nearest `AGENTS.md`, and relevant repository state once.
 2. Map unfinished outcomes into lightweight session tracking and keep at most one in progress.

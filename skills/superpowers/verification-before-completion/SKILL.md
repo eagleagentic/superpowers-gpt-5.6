@@ -1,13 +1,17 @@
 ---
 name: verification-before-completion
-description: "Build an explicit claim-to-evidence gate for high-risk, disputed, multi-check, or previously unreliable completion claims; skip when ordinary scoped checks or an active workflow already prove the result."
+description: "Use an explicit claim-to-evidence gate for High-risk work, disputed or unreliable claims, or multiple independent material claims; routine command sets alone do not trigger it."
 ---
 
 # Verification Gate
 
-Use ordinary scoped checks without this skill when a separate gate adds no discipline. Do not duplicate an active workflow's verification.
+Router-, user-, or repository-required gates cannot be skipped. Otherwise use ordinary scoped checks when a separate gate adds no discipline. Multiple routine commands alone do not trigger this skill.
+
+Reuse fresh evidence from active workflows instead of rerunning commands; map it to the claims it proves.
 
 For destructive operations, run a go/no-go check before execution and verify outcomes afterward.
+
+For production deployment, verify the target and revision, rollout health, rollback readiness, and runtime evidence; a Git push is not deployment evidence. For production-data changes, verify target identity, dry-run scope, recovery readiness, integrity, and post-operation counts without exposing sensitive records.
 
 1. List each material claim and the command or inspection that proves it.
 2. After the final relevant change, run the narrowest sufficient checks, batching compatible checks.

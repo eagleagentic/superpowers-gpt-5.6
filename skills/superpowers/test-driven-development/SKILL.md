@@ -1,11 +1,13 @@
 ---
 name: test-driven-development
-description: "Run test-first red-green-refactor through public behavior in thin vertical slices. Use only when the user requests TDD/test-first development or repository policy requires that workflow."
+description: "Use test-first red-green-refactor for authorized work when requested or required, or when a cheap focused red test disambiguates implementation or captures a confirmed regression."
 ---
 
 # Test-Driven Development
 
-Do not trigger merely because code is testable. Skip documentation, configuration-only changes, generated code, disposable prototypes, behavior the harness cannot exercise, and behavior-preserving refactors; use a green-before-and-after check for the last case.
+The user need not know or request TDD, but loading this skill does not authorize implementation. Expected behavior must be clear. Auto-trigger only when a cheap focused red test distinguishes plausible implementations or captures a confirmed regression at a public boundary. A test being possible or useful later is not enough.
+
+For an unclear cause, `systematic-debugging` owns investigation; enter red-green only after the expected behavior and red signal are trustworthy. Skip documentation, configuration-only changes, generated code, prototypes, untestable behavior, and behavior-preserving refactors; check the last green before and after.
 
 1. Define one thin vertical slice of observable behavior through its public boundary.
 2. Write or identify one focused test; an existing accurate failure can be the red state.

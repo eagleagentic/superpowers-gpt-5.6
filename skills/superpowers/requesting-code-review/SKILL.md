@@ -1,9 +1,11 @@
 ---
 name: requesting-code-review
-description: Review a defined change with evidence-based, read-only analysis. Use when requested or when material security, data, concurrency, migration, public-contract, or cross-module risk warrants judgment before integration; skip routine changes.
+description: Independently review a defined change before integration when requested or when material security, data, concurrency, migration, contract, or cross-module risk warrants it; exclude incoming feedback.
 ---
 
 # Requesting Code Review
+
+Do not use this workflow merely to evaluate incoming reviewer feedback.
 
 1. Define the exact change range from a recorded base, merge base, staged diff, or named files. Never assume `HEAD~1` covers the work.
 2. Read the requirements and name the specific risks under review.

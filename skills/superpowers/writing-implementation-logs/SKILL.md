@@ -1,11 +1,14 @@
 ---
 name: writing-implementation-logs
-description: Write a concise durable implementation record when the user or repository requires one, or complex long-running work needs audit or recovery; skip ordinary changes and routine handoffs.
+description: Write a concise durable record when required or consequential irreversible work needs audit/recovery; skip ordinary changes and handoffs.
 ---
 
 # Writing Implementation Logs
 
-Do not create a log for ordinary changes or merely because a plan exists. Write only after the implementation and primary verification finish.
+Skip ordinary changes and plan-only triggers. Write after implementation and primary verification.
+
+Do not include secrets or sensitive record identifiers.
+This file never replaces an operational system-of-record audit.
 
 1. Inspect the actual diff, fresh evidence, and any same-scope plan.
 2. For planned work, create or replace `./superpowers/docs/logs/YYYY-MM-DD-HHMMSS-02-log-<slug>.md` with the plan's timestamp and slug. For a standalone required record, use `./superpowers/docs/logs/YYYY-MM-DD-HHMMSS-01-log-<slug>.md`.

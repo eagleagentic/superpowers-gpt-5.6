@@ -15,6 +15,8 @@ Confirm the task diff is understood and relevant required checks are fresh for t
 - In a detached or externally managed workspace, report the exact limitation and preserve the work for the host workflow.
 - Remove a worktree only when this session created it, the user authorized cleanup, and no required work remains inside it.
 
+If commit or push fails, preserve the verified state and report the original error. Do not pull, rebase, merge, or force without separate authority.
+
 Never offer discard routinely. If requested, show the exact branch, unique commits, uncommitted files, and worktree path at risk; require confirmation containing `discard` for that target.
 
 After delivery, report the checks run, commit or branch state, remote action, and anything deliberately preserved. Use repository command wrappers for every shell command.

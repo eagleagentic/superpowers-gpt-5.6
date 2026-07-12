@@ -1,6 +1,6 @@
 ---
 name: writing-skills
-description: Maintain the Codex-focused Superpowers bundle. Use only when the user names writing-skills or asks to maintain this bundle; use Codex's built-in skill-creator for general skill authoring.
+description: Create, edit, or audit the Codex-focused Superpowers bundle. Use Codex's built-in skill-creator for general skill authoring.
 ---
 
 # Maintaining Superpowers Skills

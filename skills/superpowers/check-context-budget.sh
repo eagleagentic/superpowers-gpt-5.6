@@ -5,7 +5,22 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPOSITORY_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 GUIDE="$REPOSITORY_ROOT/GUIDE.md"
 README="$REPOSITORY_ROOT/README.md"
-EXPECTED_SKILLS=13
+EXPECTED_SKILL_NAMES=(
+  brainstorming
+  executing-plans
+  finishing-a-development-branch
+  receiving-code-review
+  requesting-code-review
+  systematic-debugging
+  test-driven-development
+  using-git-worktrees
+  using-superpowers
+  verification-before-completion
+  writing-implementation-logs
+  writing-plans
+  writing-skills
+)
+EXPECTED_SKILLS="${#EXPECTED_SKILL_NAMES[@]}"
 MAX_USING_SUPERPOWERS_WORDS=200
 MAX_IMPLEMENTATION_LOG_WORDS=180
 MAX_SKILL_WORDS=350
@@ -27,6 +42,13 @@ if [[ "${#skill_files[@]}" -ne "$EXPECTED_SKILLS" ]]; then
   exit 1
 fi
 
+for expected_name in "${EXPECTED_SKILL_NAMES[@]}"; do
+  if [[ ! -f "$SCRIPT_DIR/$expected_name/SKILL.md" ]]; then
+    echo "Missing expected skill: $expected_name." >&2
+    exit 1
+  fi
+done
+
 failed=0
 total=0
 description_total=0
@@ -38,10 +60,29 @@ for file in "${skill_files[@]}"; do
   printf '%-52s %d\n' "$relative" "$words"
   total=$((total + words))
 
-  description="$(sed -n 's/^description:[[:space:]]*//p' "$file")"
-  if [[ -z "$description" ]]; then
-    echo "$relative has no one-line description." >&2
+  name=""
+  description=""
+  first_line="$(sed -n '1p' "$file")"
+  frontmatter_end="$(awk 'NR > 1 && $0 == "---" { print NR; exit }' "$file")"
+  if [[ "$first_line" != "---" || -z "$frontmatter_end" ]]; then
+    echo "$relative has invalid YAML front matter boundaries." >&2
     failed=1
+  else
+    frontmatter="$(sed -n "2,$((frontmatter_end - 1))p" "$file")"
+    name_count="$(printf '%s\n' "$frontmatter" | grep -c '^name:[[:space:]]*' || true)"
+    description_count="$(printf '%s\n' "$frontmatter" | grep -c '^description:[[:space:]]*' || true)"
+    name="$(printf '%s\n' "$frontmatter" | sed -n 's/^name:[[:space:]]*//p')"
+    description="$(printf '%s\n' "$frontmatter" | sed -n 's/^description:[[:space:]]*//p')"
+    expected_name="${relative%%/*}"
+
+    if [[ "$name_count" -ne 1 || "$name" != "$expected_name" ]]; then
+      echo "$relative must have one front-matter name matching $expected_name." >&2
+      failed=1
+    fi
+    if [[ "$description_count" -ne 1 || -z "$description" || "$description" == ">"* || "$description" == "|"* ]]; then
+      echo "$relative must have one front-matter description on one line." >&2
+      failed=1
+    fi
   fi
   description_total=$((description_total + ${#description}))
 
@@ -151,19 +192,46 @@ require_contract() {
   fi
 }
 
-require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'A file edit or tool call alone never justifies escalation.'
-require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'When planning helps routine work, native planning is sufficient; a native plan alone does not require a durable file.'
-require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Load another workflow skill only when its description independently matches the task'
+require_contract "$SCRIPT_DIR/brainstorming/SKILL.md" 'materially different interpretations would change scope, architecture, or consequential outcomes'
+require_contract "$SCRIPT_DIR/executing-plans/SKILL.md" "A plan's existence or approval to plan does not authorize implementation."
+require_contract "$SCRIPT_DIR/finishing-a-development-branch/SKILL.md" 'Do not pull, rebase, merge, or force without separate authority.'
+require_contract "$SCRIPT_DIR/receiving-code-review/SKILL.md" 'Evaluation-only requests remain read-only.'
+require_contract "$SCRIPT_DIR/requesting-code-review/SKILL.md" 'Do not use this workflow merely to evaluate incoming reviewer feedback.'
+require_contract "$SCRIPT_DIR/systematic-debugging/SKILL.md" 'For diagnosis-only requests, stop after confirming or bounding the cause; do not edit.'
+require_contract "$SCRIPT_DIR/systematic-debugging/SKILL.md" 'If no reliable reproduction is possible, collect stable observations and identify missing evidence; do not guess at a fix.'
+require_contract "$SCRIPT_DIR/systematic-debugging/SKILL.md" 'If `test-driven-development` independently matches, it owns red-green mutation order.'
+require_contract "$SCRIPT_DIR/test-driven-development/SKILL.md" 'The user need not know or request TDD, but loading this skill does not authorize implementation.'
+require_contract "$SCRIPT_DIR/test-driven-development/SKILL.md" 'Auto-trigger only when a cheap focused red test distinguishes plausible implementations or captures a confirmed regression at a public boundary.'
+require_contract "$SCRIPT_DIR/test-driven-development/SKILL.md" 'A test being possible or useful later is not enough.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Mandatory newcomer-safe router.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Choose the highest applicable tier; uncertainty moves upward.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'subject risk alone does not escalate.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" '**Mechanical:** provably non-behavioral changes without data, dependency, security, public-contract, or external-state impact.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" '**Standard:** every non-mechanical implementation.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'implement minimally with practical focused coverage; run strongest focused checks; review final diff; report evidence.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'User silence never waives Standard.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" '**High-risk:** follow Standard.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'requires `writing-plans` before implementation or consequential action and `verification-before-completion`.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Native plans need no durable file.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Reclassify when new scope or risk appears and before consequential external action.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Reuse fresh evidence unless state changed or a claim remains unproved.'
 require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'A native plan alone does not require this file.'
 require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'A durable plan does not automatically require a log, review, worktree, or separate completion gate'
-require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'For destructive or external work, put recovery, stop conditions, and pre-execution checks in acceptance.'
+require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'For destructive or consequential external-state work, put recovery, stop conditions, and pre-execution checks in acceptance.'
+require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'For production-data work, include target, approvals, dry-run counts, backup/restore evidence, integrity checks, batch/abort thresholds, and sensitive-output hygiene.'
+require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'For production deployment, include target revision, approvals, rollout, health evidence, rollback, and monitoring stop conditions.'
 require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'YYYY-MM-DD-HHMMSS-01-plan-<slug>.md'
-require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'Do not create a log for ordinary changes or merely because a plan exists.'
+require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'Skip ordinary changes and plan-only triggers.'
+require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'Do not include secrets or sensitive record identifiers.'
+require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'This file never replaces an operational system-of-record audit.'
 require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'A later same-scope implementation mutation requires affected re-verification'
 require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'YYYY-MM-DD-HHMMSS-02-log-<slug>.md'
 require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'YYYY-MM-DD-HHMMSS-01-log-<slug>.md'
-require_contract "$SCRIPT_DIR/verification-before-completion/SKILL.md" 'Use ordinary scoped checks without this skill when a separate gate adds no discipline.'
+require_contract "$SCRIPT_DIR/verification-before-completion/SKILL.md" 'Router-, user-, or repository-required gates cannot be skipped.'
+require_contract "$SCRIPT_DIR/verification-before-completion/SKILL.md" 'Multiple routine commands alone do not trigger this skill.'
+require_contract "$SCRIPT_DIR/verification-before-completion/SKILL.md" 'Reuse fresh evidence from active workflows instead of rerunning commands; map it to the claims it proves.'
 require_contract "$SCRIPT_DIR/verification-before-completion/SKILL.md" 'For destructive operations, run a go/no-go check before execution and verify outcomes afterward.'
+require_contract "$SCRIPT_DIR/verification-before-completion/SKILL.md" 'a Git push is not deployment evidence.'
 require_contract "$SCRIPT_DIR/finishing-a-development-branch/SKILL.md" 'Do not require a separate plan, log, or reconciliation artifact unless the user or repository does.'
 
 if [[ -e "$SCRIPT_DIR/using-superpowers/references/durable-development.md" ]]; then
@@ -173,6 +241,11 @@ fi
 
 if grep -Eiq 'documentation readiness|Any Codex Plan Mode or native plan makes|after every fully implemented' "$SCRIPT_DIR"/*/SKILL.md; then
   echo "Found a retired universal lifecycle requirement." >&2
+  failed=1
+fi
+
+if grep -Fqi 'trivial and routine work direct' "$SCRIPT_DIR/using-superpowers/SKILL.md"; then
+  echo "The over-broad routine direct path returned." >&2
   failed=1
 fi
 

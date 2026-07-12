@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
   <title id="title">GPT-5.6 Superpowers 儀表板</title>
-  <desc id="desc">13 個 skills 使用 2,482 words，比 obra/superpowers 的 18,516 words 少 86.6%。每次對話經過輕量 router，選擇最小相關 skills，再以相稱的新鮮證據完成驗證。</desc>
+  <desc id="desc">13 個 skills 使用 2,691 words，比 obra/superpowers 的 18,516 words 少 85.5%。每次對話經過 newcomer-safe router，強制核心紀律、選擇最少額外 skills，再以相稱的新鮮證據完成驗證。</desc>
   <defs>
     <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0b1020"/>
@@ -21,7 +21,7 @@
 
   <g font-family="Inter, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', ui-sans-serif, system-ui, sans-serif">
     <text x="60" y="58" fill="#f8fafc" font-size="30" font-weight="750">GPT-5.6 Superpowers</text>
-    <text x="60" y="88" fill="#aab4d0" font-size="16">每次啟動 router，只用必要流程，以新鮮證據完成驗證。</text>
+    <text x="60" y="88" fill="#aab4d0" font-size="16">強制核心流程，依風險加強，以新鮮證據完成驗證。</text>
     <rect x="1001" y="45" width="139" height="34" rx="17" fill="#17213d" stroke="#33446f"/>
     <circle cx="1024" cy="62" r="5" fill="#6ee7b7"/>
     <text x="1038" y="67" fill="#d7e2ff" font-size="12" font-weight="650">CODEX-NATIVE</text>
@@ -34,12 +34,12 @@
 
       <rect x="430" y="118" width="340" height="105" rx="16" fill="#151d35" stroke="#283657"/>
       <text x="454" y="151" fill="#8fa0c4" font-size="13" font-weight="650" letter-spacing="1">SKILL 正文詞數</text>
-      <text x="454" y="195" fill="#59d5e0" font-size="38" font-weight="760">2,482</text>
+      <text x="454" y="195" fill="#59d5e0" font-size="38" font-weight="760">2,691</text>
       <text x="573" y="194" fill="#c8d4ee" font-size="17">words</text>
 
       <rect x="800" y="118" width="340" height="105" rx="16" fill="#151d35" stroke="#6d5ca5"/>
       <text x="824" y="151" fill="#a99bd8" font-size="13" font-weight="650" letter-spacing="1">CONTEXT 精簡幅度</text>
-      <text x="824" y="195" fill="#a78bfa" font-size="38" font-weight="760">86.6%</text>
+      <text x="824" y="195" fill="#a78bfa" font-size="38" font-weight="760">85.5%</text>
       <text x="948" y="194" fill="#c8d4ee" font-size="17">更精簡</text>
     </g>
 
@@ -54,28 +54,28 @@
       <rect x="86" y="335" width="608" height="18" rx="9" fill="#64748b" opacity="0.82"/>
 
       <text x="86" y="390" fill="#d7e2ff" font-size="14" font-weight="650">GPT-5.6 family 版本</text>
-      <text x="694" y="390" fill="#59d5e0" font-size="14" font-weight="700" text-anchor="end">2,482 · 13.4%</text>
+      <text x="694" y="390" fill="#59d5e0" font-size="14" font-weight="700" text-anchor="end">2,691 · 14.5%</text>
       <rect x="86" y="402" width="608" height="18" rx="9" fill="#293450"/>
-      <rect x="86" y="402" width="82" height="18" rx="9" fill="url(#accent)"/>
+      <rect x="86" y="402" width="88" height="18" rx="9" fill="url(#accent)"/>
       <text x="86" y="449" fill="#7f90b5" font-size="12">上游基準 d884ae0 · 量測日期 2026-07-13</text>
     </g>
 
     <g>
       <rect x="742" y="249" width="398" height="216" rx="18" fill="#10182d" stroke="#283657"/>
-      <text x="768" y="282" fill="#f8fafc" font-size="17" font-weight="700">Adaptive routing</text>
+      <text x="768" y="282" fill="#f8fafc" font-size="17" font-weight="700">新手安全路由</text>
 
       <rect x="768" y="303" width="150" height="48" rx="12" fill="#17213d" stroke="#33446f"/>
       <text x="843" y="332" fill="#d7e2ff" font-size="13" font-weight="650" text-anchor="middle">每次對話</text>
       <path d="M925 327h32" stroke="#59d5e0" stroke-width="2"/>
       <path d="m952 322 7 5-7 5" fill="none" stroke="#59d5e0" stroke-width="2"/>
       <rect x="966" y="303" width="148" height="48" rx="12" fill="#17213d" stroke="#3f5c78"/>
-      <text x="1040" y="332" fill="#59d5e0" font-size="13" font-weight="700" text-anchor="middle">輕量 Router</text>
+      <text x="1040" y="332" fill="#59d5e0" font-size="13" font-weight="700" text-anchor="middle">強制 Router</text>
 
       <path d="M1040 358v25" stroke="#a78bfa" stroke-width="2"/>
       <path d="m1035 378 5 7 5-7" fill="none" stroke="#a78bfa" stroke-width="2"/>
 
       <rect x="966" y="392" width="148" height="48" rx="12" fill="#17213d" stroke="#5e4d91"/>
-      <text x="1040" y="421" fill="#c4b5fd" font-size="13" font-weight="700" text-anchor="middle">最小 Skills</text>
+      <text x="1040" y="421" fill="#c4b5fd" font-size="13" font-weight="700" text-anchor="middle">核心 + 風險 Skills</text>
       <path d="M957 416h-32" stroke="#6ee7b7" stroke-width="2"/>
       <path d="m930 411-7 5 7 5" fill="none" stroke="#6ee7b7" stroke-width="2"/>
       <rect x="768" y="392" width="150" height="48" rx="12" fill="#17213d" stroke="#376b67"/>
