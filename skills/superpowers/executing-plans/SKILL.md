@@ -7,8 +7,8 @@ description: Execute an existing implementation plan directly in the active Code
 
 Execute plans inline with the active session model.
 
-1. Read the plan, durable task file, nearest `AGENTS.md`, and relevant repository state once.
-2. Materialize any chat/native plan before implementation; if writes are forbidden, make the task file the first permitted repository mutation.
+1. Read the plan, nearest `AGENTS.md`, and relevant repository state once.
+2. Materialize any chat/native plan before implementation; if writes are forbidden, make the plan file the first permitted repository mutation.
 3. Map unfinished outcomes into the native plan and keep at most one item in progress.
 4. For each outcome, implement the minimum required change, run focused verification, and record completion evidence.
 5. Run final checks and reconcile the actual diff, acceptance, evidence, outcome, and limitations.

@@ -151,12 +151,16 @@ require_contract() {
   fi
 }
 
-require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Any Codex Plan Mode or native plan makes a durable task file mandatory.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Any Codex Plan Mode or native plan makes a durable plan file mandatory.'
 require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" '**Simple implementation:** low-risk, reversible, one direct path.'
 require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'Once any plan exists, however, never downgrade the durable requirement.'
+require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'YYYY-MM-DD-HHMMSS-01-plan-<slug>.md'
 require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'Write only after the whole implementation and primary verification finish.'
 require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'A later same-scope implementation mutation invalidates the log'
+require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'YYYY-MM-DD-HHMMSS-02-log-<slug>.md'
+require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'YYYY-MM-DD-HHMMSS-01-log-<slug>.md'
 require_contract "$SCRIPT_DIR/using-superpowers/references/durable-development.md" 'Conversation-only, read-only, plan-only, blocked, and no-diff work do not receive an Implementation Log.'
+require_contract "$SCRIPT_DIR/using-superpowers/references/durable-development.md" 'the phase token is fixed and makes plan → log order explicit.'
 
 for removed_skill in dispatching-parallel-agents subagent-driven-development; do
   if [[ -e "$SCRIPT_DIR/$removed_skill" ]]; then
@@ -167,7 +171,7 @@ done
 
 runtime_files=("$SCRIPT_DIR"/*/SKILL.md "$SCRIPT_DIR/using-superpowers/references/durable-development.md")
 if grep -Eiq 'sub-?agents?|delegat(e|ed|es|ing|ion)|spawn_agent|followup_task|fork_turns' "${runtime_files[@]}"; then
-  echo "Runtime Superpowers guidance must not own delegation; use native Codex instead." >&2
+  echo "Runtime Superpowers guidance must remain single-agent." >&2
   failed=1
 fi
 
@@ -181,12 +185,8 @@ if grep -Eiq 'GPT-5\.6[- ]Sol profile|GPT-5\.6-sol already handles|direct GPT-5\
   failed=1
 fi
 
-validate_local_links() {
-  local markdown_file="$1"
-  local link
-  local target
-  local relative
-
+printf '\nValidating local Markdown links\n'
+for markdown_file in "$REPOSITORY_ROOT/GUIDE.md" "$REPOSITORY_ROOT/GUIDE.zh-TW.md" "$REPOSITORY_ROOT/README.md" "$REPOSITORY_ROOT/README.zh-TW.md"; do
   while IFS= read -r link; do
     target="${link#](}"
     target="${target%%#*}"
@@ -200,15 +200,22 @@ validate_local_links() {
       failed=1
     fi
   done < <(grep -Eo '\]\([^)]+' "$markdown_file" || true)
-}
-
-printf '\nValidating local Markdown links\n'
-for markdown_file in "$REPOSITORY_ROOT/GUIDE.md" "$REPOSITORY_ROOT/GUIDE.zh-TW.md" "$REPOSITORY_ROOT/README.md" "$REPOSITORY_ROOT/README.zh-TW.md"; do
-  validate_local_links "$markdown_file"
 done
 
 while IFS= read -r markdown_file; do
-  validate_local_links "$markdown_file"
+  while IFS= read -r link; do
+    target="${link#](}"
+    target="${target%%#*}"
+    case "$target" in
+      ""|http://*|https://*|mailto:*) continue ;;
+    esac
+
+    if [[ ! -e "$(dirname "$markdown_file")/$target" ]]; then
+      relative="${markdown_file#"$SCRIPT_DIR"/}"
+      echo "$relative links to missing local target: $target" >&2
+      failed=1
+    fi
+  done < <(grep -Eo '\]\([^)]+' "$markdown_file" || true)
 done < <(find "$SCRIPT_DIR" -type f -name '*.md' -print | sort)
 
 if [[ "$failed" -eq 0 ]]; then

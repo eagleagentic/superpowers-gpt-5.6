@@ -7,7 +7,7 @@ description: Write one concise human-readable log after every fully implemented 
 
 Write only after the whole implementation and primary verification finish.
 
-1. Inspect matching files in `./superpowers/docs/plans/` and `./superpowers/docs/logs/`; create or replace `./superpowers/docs/logs/YYYY-MM-DD-<slug>.md`, matching its plan filename.
+1. Inspect matching records by timestamp and scope slug in `./superpowers/docs/plans/` and `./superpowers/docs/logs/`. For planned work, create or replace `./superpowers/docs/logs/YYYY-MM-DD-HHMMSS-02-log-<slug>.md` using the plan's timestamp and slug; for simple work, create `./superpowers/docs/logs/YYYY-MM-DD-HHMMSS-01-log-<slug>.md`. Never choose a new timestamp for a planned log.
 2. Inspect the actual diff and fresh evidence.
 3. Append or replace:
 

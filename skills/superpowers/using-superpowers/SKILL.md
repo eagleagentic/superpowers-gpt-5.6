@@ -12,12 +12,12 @@ Classify every turn:
 - **Planned work:** an explicit/native plan exists, or complexity, risk, dependencies, isolation, or duration justify one.
 - **Completion-awaiting-log:** implementation exists; verification, log, or reconciliation is stale.
 
-Select `writing-plans` for planned work. Any Codex Plan Mode or native plan makes a durable task file mandatory. If Plan Mode forbids writes, create it as the first permitted repository mutation. Do not plan simple work merely to satisfy process.
+Select `writing-plans` for planned work. Any Codex Plan Mode or native plan makes a durable plan file mandatory. If Plan Mode forbids writes, create it as the first permitted repository mutation. Do not plan simple work merely to satisfy process.
 
 Before persistent mutation, read and apply [Durable Development Lifecycle](references/durable-development.md). After the whole implementation and fresh primary verification, select `writing-implementation-logs`; skip logs for read-only, plan-only, blocked, or no-diff work.
 
-Before completion, commit, or push, reopen the task file and compare it with the actual diff and fresh evidence.
+Before completion, commit, or push, reopen the required plan (if planned) and matching log; compare both with the diff and fresh evidence.
 
 Keep active model and reasoning effort. Recommend `/model` only for material quality or cost benefit; never launch nested Codex to simulate a switch.
 
-Match descriptions, honor named skills, read selected skills, and avoid unrelated process chains. Inspect first; follow higher-priority and repository instructions.
+Honor descriptions and named skills; read selected skills, inspect first, and follow higher-priority repository instructions.

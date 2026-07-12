@@ -6,13 +6,13 @@ Apply this lifecycle automatically to authorized persistent work. Conversation-o
 
 - A durable plan owns intent, scope, material decisions, acceptance, and verification strategy when planning is required.
 - The Implementation Log owns the concise human-readable outcome, verification summary, and material limitations.
-- Plans live only in `./superpowers/docs/plans/`; Implementation Logs live only in `./superpowers/docs/logs/`. Planned work uses matching filenames; simple work has only a log.
+- Plans live only in `./superpowers/docs/plans/`; Implementation Logs live only in `./superpowers/docs/logs/`. Planned records share a timestamp and scope slug, with `01-plan` before `02-log`; simple work has only a `01-log`.
 - Repository state owns the implementation that exists.
 - Verification evidence proves the final repository state against acceptance; it cannot redefine acceptance or excuse stale documentation.
 
 ## Choose durable records
 
-Inspect `./superpowers/docs/plans/` and `./superpowers/docs/logs/` for records in the same scope. Create plans only at `./superpowers/docs/plans/YYYY-MM-DD-<slug>.md` and logs only at `./superpowers/docs/logs/YYYY-MM-DD-<slug>.md`; planned work uses the same filename in both directories. Keep one plan and one log per implementation scope.
+Inspect `./superpowers/docs/plans/` and `./superpowers/docs/logs/` for records with the same timestamp and scope slug. Create plans only at `./superpowers/docs/plans/YYYY-MM-DD-HHMMSS-01-plan-<slug>.md`, planned logs only at `./superpowers/docs/logs/YYYY-MM-DD-HHMMSS-02-log-<slug>.md`, and simple logs only at `./superpowers/docs/logs/YYYY-MM-DD-HHMMSS-01-log-<slug>.md`. Use the plan's timestamp and slug when creating its log; the phase token is fixed and makes plan → log order explicit. Keep one plan and one log per implementation scope.
 
 Keep the file concise and recoverable. Do not store transcripts, hidden reasoning, routine command output, or detailed diff narration.
 
@@ -34,7 +34,7 @@ Preserve original intent and acceptance. Record material requirement, scope, des
 
 After the whole persistent implementation and fresh primary verification, apply `writing-implementation-logs` once:
 
-1. Create or update the matching Implementation Log in `./superpowers/docs/logs/`; simple work creates only this log.
+1. Create or update the matching `02-log` in `./superpowers/docs/logs/`; simple work creates only a `01-log`.
 2. Summarize what changed in one to three human-readable bullets.
 3. Record one to three verification results and only material limitations.
 4. Derive the log from the actual diff and fresh evidence, not conversation memory.
