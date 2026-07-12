@@ -3,33 +3,17 @@ name: brainstorming
 description: "Turn ambiguous, high-impact product or system ideas into a concise, decision-ready design. Use when the user asks to explore an idea, compare materially different approaches, or resolve important requirements before implementation."
 ---
 
-## Trigger
+# Brainstorming
 
-- Use this skill for ambiguous goals, material product choices, competing architectures, or broad requests needing decomposition.
-- Use it when the user explicitly asks to brainstorm or design before implementation.
+Skip precise tasks, approved specifications, mechanical changes, and questions answerable from repository context.
 
-## Skip
+1. Inspect only the relevant instructions, files, and current behavior.
+2. State the goal, constraints, success criteria, and safe assumptions.
+3. Ask one blocking question only when the answer materially changes the result.
+4. Recommend one approach first; include only genuinely viable, materially different alternatives.
+5. Describe the smallest useful design: ownership, interfaces, data flow, failure behavior, and verification where relevant.
+6. Request approval only for a material scope, architecture, irreversible, or externally visible decision.
 
-- Skip it for precise tasks with clear acceptance criteria, approved specifications, bug diagnosis, or mechanical code, configuration, and documentation changes.
-- Skip questions whose answers are discoverable from repository context.
+Decompose independent subsystems only when it clarifies ownership. Pause for missing authority or consequential choices. Read [visual-companion.md](visual-companion.md) only when the user explicitly requests visual comparison.
 
-## Core Loop
-
-1. Inspect only the relevant repository files, instructions, and current behavior with Codex CLI.
-2. State the goal, constraints, success criteria, and any safe assumptions.
-3. Ask one concise blocking question only when an unresolved choice would materially change the result.
-4. Present the recommended approach first. Include alternatives only when they are genuinely viable and materially different.
-5. Describe the smallest useful design: ownership boundaries, interfaces, data flow, failure behavior, and verification strategy as applicable.
-6. Request one approval only for a material scope, architecture, irreversible, or externally visible decision. Otherwise proceed under stated assumptions.
-
-## Escalation
-
-- Decompose independent subsystems before designing them in detail.
-- Pause when required authority, external coordination, or a consequential user choice is missing.
-- Read `visual-companion.md` only when the user explicitly requests the visual companion.
-- For persistent design, trigger `writing-plans` and record the chosen design and acceptance before implementation. Any native plan requires a durable task file; if writes are forbidden, create it as the first permitted mutation.
-
-## Evidence
-
-- Record the chosen approach, rejected material alternatives, assumptions, and acceptance criteria concisely.
-- Ensure the proposed design traces directly to the requested outcome before implementation.
+For later implementation, pass forward the chosen approach, assumptions, and acceptance. Select durable planning only if its description independently matches the work.

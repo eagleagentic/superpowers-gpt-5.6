@@ -8,11 +8,11 @@ README="$REPOSITORY_ROOT/README.md"
 EXPECTED_SKILLS=13
 MAX_USING_SUPERPOWERS_WORDS=200
 MAX_IMPLEMENTATION_LOG_WORDS=180
-MAX_SKILL_WORDS=500
-MAX_TOTAL_WORDS=3500
-MAX_DESCRIPTION_TOTAL_CHARS=3000
-MAX_SUPPORT_WORDS=700
-MAX_SUPPORT_TOTAL_WORDS=3200
+MAX_SKILL_WORDS=350
+MAX_TOTAL_WORDS=2700
+MAX_DESCRIPTION_TOTAL_CHARS=2800
+MAX_SUPPORT_WORDS=500
+MAX_SUPPORT_TOTAL_WORDS=2200
 
 shopt -s nullglob
 skill_files=("$SCRIPT_DIR"/*/SKILL.md)
@@ -151,16 +151,30 @@ require_contract() {
   fi
 }
 
-require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Any Codex Plan Mode or native plan makes a durable plan file mandatory.'
-require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" '**Simple implementation:** low-risk, reversible, one direct path.'
-require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'Once any plan exists, however, never downgrade the durable requirement.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'A file edit or tool call alone never justifies escalation.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'When planning helps routine work, native planning is sufficient; a native plan alone does not require a durable file.'
+require_contract "$SCRIPT_DIR/using-superpowers/SKILL.md" 'Load another workflow skill only when its description independently matches the task'
+require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'A native plan alone does not require this file.'
+require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'A durable plan does not automatically require a log, review, worktree, or separate completion gate'
+require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'For destructive or external work, put recovery, stop conditions, and pre-execution checks in acceptance.'
 require_contract "$SCRIPT_DIR/writing-plans/SKILL.md" 'YYYY-MM-DD-HHMMSS-01-plan-<slug>.md'
-require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'Write only after the whole implementation and primary verification finish.'
-require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'A later same-scope implementation mutation invalidates the log'
+require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'Do not create a log for ordinary changes or merely because a plan exists.'
+require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'A later same-scope implementation mutation requires affected re-verification'
 require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'YYYY-MM-DD-HHMMSS-02-log-<slug>.md'
 require_contract "$SCRIPT_DIR/writing-implementation-logs/SKILL.md" 'YYYY-MM-DD-HHMMSS-01-log-<slug>.md'
-require_contract "$SCRIPT_DIR/using-superpowers/references/durable-development.md" 'Conversation-only, read-only, plan-only, blocked, and no-diff work do not receive an Implementation Log.'
-require_contract "$SCRIPT_DIR/using-superpowers/references/durable-development.md" 'the phase token is fixed and makes plan → log order explicit.'
+require_contract "$SCRIPT_DIR/verification-before-completion/SKILL.md" 'Use ordinary scoped checks without this skill when a separate gate adds no discipline.'
+require_contract "$SCRIPT_DIR/verification-before-completion/SKILL.md" 'For destructive operations, run a go/no-go check before execution and verify outcomes afterward.'
+require_contract "$SCRIPT_DIR/finishing-a-development-branch/SKILL.md" 'Do not require a separate plan, log, or reconciliation artifact unless the user or repository does.'
+
+if [[ -e "$SCRIPT_DIR/using-superpowers/references/durable-development.md" ]]; then
+  echo "The retired universal lifecycle reference returned." >&2
+  failed=1
+fi
+
+if grep -Eiq 'documentation readiness|Any Codex Plan Mode or native plan makes|after every fully implemented' "$SCRIPT_DIR"/*/SKILL.md; then
+  echo "Found a retired universal lifecycle requirement." >&2
+  failed=1
+fi
 
 for removed_skill in dispatching-parallel-agents subagent-driven-development; do
   if [[ -e "$SCRIPT_DIR/$removed_skill" ]]; then
@@ -169,7 +183,7 @@ for removed_skill in dispatching-parallel-agents subagent-driven-development; do
   fi
 done
 
-runtime_files=("$SCRIPT_DIR"/*/SKILL.md "$SCRIPT_DIR/using-superpowers/references/durable-development.md")
+runtime_files=("$SCRIPT_DIR"/*/SKILL.md)
 if grep -Eiq 'sub-?agents?|delegat(e|ed|es|ing|ion)|spawn_agent|followup_task|fork_turns' "${runtime_files[@]}"; then
   echo "Runtime Superpowers guidance must remain single-agent." >&2
   failed=1

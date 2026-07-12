@@ -9,17 +9,17 @@
 | Skill | 能力 | Trigger |
 | --- | --- | --- |
 | [`brainstorming`](skills/superpowers/brainstorming/SKILL.md) | 收斂需求與設計選擇 | 需要探索設計、需求仍模糊或行為變更有重要取捨時。 |
-| [`executing-plans`](skills/superpowers/executing-plans/SKILL.md) | 依既有計畫 inline 執行 | 已有可執行 implementation plan，適合由主 agent 在目前 session 完成時。 |
+| [`executing-plans`](skills/superpowers/executing-plans/SKILL.md) | inline 執行實質計畫 | 已獲授權的 multi-step 或 durable plan 有相依 outcomes，值得明確追蹤時。 |
 | [`finishing-a-development-branch`](skills/superpowers/finishing-a-development-branch/SKILL.md) | 處理 branch 交付 | 實作完成，且使用者或 repo policy 要求已授權的 integration、push、PR、branch 或 worktree 決策時。 |
 | [`receiving-code-review`](skills/superpowers/receiving-code-review/SKILL.md) | 核實並處理 review feedback | 收到 code review 建議，需要判斷正確性或實作修改時。 |
-| [`requesting-code-review`](skills/superpowers/requesting-code-review/SKILL.md) | 執行風險導向 review | 使用者明確要求 review，或變更涉及安全、資料、併發、公共 API 或跨模組風險時。 |
+| [`requesting-code-review`](skills/superpowers/requesting-code-review/SKILL.md) | 執行風險導向 review | 使用者明確要求 review，或安全、資料、併發、公共契約、migration 或跨模組風險達到實質程度時。 |
 | [`systematic-debugging`](skills/superpowers/systematic-debugging/SKILL.md) | 證據導向定位根因 | 遇到 bug、測試失敗或非預期行為，且原因尚未證實時。 |
-| [`test-driven-development`](skills/superpowers/test-driven-development/SKILL.md) | 以測試保護可觀察行為 | 在有實用自動化 test harness 的 repo 實作新行為或修復可重現 bug 時。 |
+| [`test-driven-development`](skills/superpowers/test-driven-development/SKILL.md) | 以 red-green-refactor 實作 | 只有使用者要求 TDD/test-first，或 repository policy 規定時。 |
 | [`using-git-worktrees`](skills/superpowers/using-git-worktrees/SKILL.md) | 建立隔離 workspace | 使用者明確要求、執行環境要求，或 long-lived、parallel、高風險變更會因隔離而實質受益時。 |
 | [`using-superpowers`](skills/superpowers/using-superpowers/SKILL.md) | 路由這組流程技能 | 每次對話開始時啟動，在回覆或採取行動前選擇最小的相關 skill set。 |
-| [`verification-before-completion`](skills/superpowers/verification-before-completion/SKILL.md) | 以新鮮證據支持完成聲明 | 即將 final handoff 或聲稱成功，且沒有其他 active workflow 提供同等 gate 時。 |
-| [`writing-implementation-logs`](skills/superpowers/writing-implementation-logs/SKILL.md) | 記錄已驗證的實作成果 | persistent implementation 與 primary verification 完成後使用一次。 |
-| [`writing-plans`](skills/superpowers/writing-plans/SKILL.md) | 產生 durable implementation plan | 使用者要求計畫，或複雜工作需要可恢復、跨 session 的 handoff 時。 |
+| [`verification-before-completion`](skills/superpowers/verification-before-completion/SKILL.md) | 為困難完成聲明設 gate | 高風險、有爭議、多項檢查或過往證據不可靠，且一般檢查不足時。 |
+| [`writing-implementation-logs`](skills/superpowers/writing-implementation-logs/SKILL.md) | 記錄已驗證的實作成果 | 只有需要 durable record，或複雜長期工作需要 audit/recovery 時。 |
+| [`writing-plans`](skills/superpowers/writing-plans/SKILL.md) | 產生 durable implementation plan | 明確要求 durable plan，或複雜、高風險、跨系統、破壞性、長期協作時。 |
 | [`writing-skills`](skills/superpowers/writing-skills/SKILL.md) | 維護 Codex 版 Superpowers skills | 使用者明確點名 `writing-skills`，或要求維護這份 bundle 時；一般 skill authoring 使用 Codex 內建 `skill-creator`。 |
 
 ## 使用範例
@@ -40,7 +40,7 @@
 空頁面的分頁測試會間歇性失敗。請重現問題、追蹤根因、做最小修正，並執行回歸檢查。
 ```
 
-`systematic-debugging` 負責蒐集證據與測試假設。如果 repository 有實用的 test harness，且修正會改變可觀察行為，再加入 `test-driven-development`。
+`systematic-debugging` 負責蒐集證據與測試假設。只有請求或 repository policy 要求 test-first 時才加入 `test-driven-development`；其他情況可直接加入聚焦 regression test。
 
 ### 3. 我需要有證據的 review
 
@@ -70,11 +70,11 @@
 
 1. `using-superpowers` 路由請求；只有 delimiter、escaping 或輸出責任等重要選擇才交給 `brainstorming` 釐清。
 2. `writing-plans` 記錄 acceptance criteria 與驗證策略。plan 建立前不要開始實作。
-3. 獲得實作授權後，`executing-plans` 逐項完成 outcomes。如果 repository 的 test harness 能測試匯出行為，就使用 `test-driven-development`。
+3. 獲得實作授權後，`executing-plans` 逐項完成 outcomes。除非使用者或 repository 明確要求 `test-driven-development`，否則直接使用聚焦測試。
 4. 執行聚焦測試與 repository 要求的檢查，並把實際 diff 與 plan、acceptance criteria 對照。
 5. `writing-implementation-logs` 記錄已驗證的結果。只有在 commit 或 push 獲授權時才使用 `finishing-a-development-branch`。
 
-如果最後確認只是低風險的一行修改，同一個 router 也可以選擇更簡單的 inline 路徑，不會強迫使用完整流程。
+若 prompt 沒有明確要求 durable plan，低風險的一行修改會直接走 direct path，而不是這套流程。
 
 ## Model 選擇與 delegation
 
@@ -88,6 +88,7 @@ Codex Ultra 預設提供 native subagent delegation。這個 bundle 因而移除
 2. 不因「可能有幫助」串接設計、計畫、worktree、TDD、review 或 branch-finishing workflows。
 3. 需要 delegation 時使用 Codex Ultra 的 native capability；不要恢復 bundle-level dispatch workflows。
 4. 依風險調整規劃與驗證深度；文件或機械修改不需要完整開發儀式。
-5. 宣稱完成前提供與該聲明相稱的新鮮證據，避免重跑無關檢查。
+5. Native planning 不會強制 durable plan file，一般實作也不需要 implementation log。
+6. 宣稱完成前提供與該聲明相稱的新鮮證據，避免重跑無關檢查。
 
 執行 `bash skills/superpowers/check-context-budget.sh` 檢查技能數量與 context budget。

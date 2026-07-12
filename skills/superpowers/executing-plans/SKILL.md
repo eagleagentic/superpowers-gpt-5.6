@@ -1,22 +1,19 @@
 ---
 name: executing-plans
-description: Execute an existing implementation plan directly in the active Codex session while tracking progress and verification. Use when a concrete plan already exists and implementation is authorized.
+description: Execute an authorized multi-step or durable implementation plan in the active session. Use when dependent outcomes need tracking; skip short routine checklists that Codex can execute directly.
 ---
 
 # Executing Plans
 
-Execute plans inline with the active session model.
-
 1. Read the plan, nearest `AGENTS.md`, and relevant repository state once.
-2. Materialize any chat/native plan before implementation; if writes are forbidden, make the plan file the first permitted repository mutation.
-3. Map unfinished outcomes into the native plan and keep at most one item in progress.
-4. For each outcome, implement the minimum required change, run focused verification, and record completion evidence.
-5. Run final checks and reconcile the actual diff, acceptance, evidence, outcome, and limitations.
+2. Map unfinished outcomes into lightweight session tracking and keep at most one in progress.
+3. Implement the minimum required change for each outcome; batch checks when that proves the same behavior more efficiently.
+4. After the final relevant change, run the plan's required checks and compare the actual diff with acceptance once.
 
-Treat the plan as an implementation contract, not a transcript to follow blindly. Adapt paths or mechanics when repository reality differs, while preserving requirements and scope.
+Treat the plan as an outcome contract, not a transcript. Adapt mechanics when repository reality differs while preserving scope and acceptance. Update a durable plan before continuing only when a material requirement, design, or verification strategy changes.
 
-Native item completion is candidate status only. Any later relevant mutation invalidates affected evidence and reconciliation.
+Later relevant mutations invalidate only affected evidence; rerun those checks before claiming completion.
 
 Resolve recoverable failures with safe diagnostics and alternatives. Ask the user only when missing authority, an architectural choice, or ambiguous requirements would change the result.
 
-Follow the user's instructions and local repository policy for tests, commits, pushes, branches, and worktrees. Do not automatically invoke another workflow skill or pause for a fixed completion menu.
+Do not invoke another workflow skill solely because a plan exists.

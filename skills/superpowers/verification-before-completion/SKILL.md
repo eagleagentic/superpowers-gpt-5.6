@@ -1,41 +1,20 @@
 ---
 name: verification-before-completion
-description: "Build a claim-to-evidence completion gate for nontrivial or disputed delivery claims. Use when verification spans several checks, risk warrants an explicit gate, or prior completion evidence proved unreliable; skip when an active workflow or ordinary Codex checks already prove the claim."
+description: "Build an explicit claim-to-evidence gate for high-risk, disputed, multi-check, or previously unreliable completion claims; skip when ordinary scoped checks or an active workflow already prove the result."
 ---
 
-## Trigger
+# Verification Gate
 
-- Use this gate for high-risk, disputed, multi-check, or previously unreliable completion claims.
-- Verify again after any relevant requirement, scope, design, implementation, configuration, test, dependency, environment, or review change.
+Use ordinary scoped checks without this skill when a separate gate adds no discipline. Do not duplicate an active workflow's verification.
 
-## Skip
+For destructive operations, run a go/no-go check before execution and verify outcomes afterward.
 
-- Use ordinary scoped checks directly when a separate verification workflow would add no discipline.
-- Skip this skill when an active workflow already owns the same gate.
-- Skipping this skill never skips durable reconciliation for persistent work.
-- Skip duplicate runs when nothing relevant changed and current evidence still proves the claim.
-- Skip unrelated or disproportionately expensive suites unless repository policy or change risk requires them.
+1. List each material claim and the command or inspection that proves it.
+2. After the final relevant change, run the narrowest sufficient checks, batching compatible checks.
+3. Inspect exit status, failures, and meaningful warnings; do not infer success from partial output.
+4. Compare the actual diff and final state with acceptance.
+5. Report only what the evidence proves, including unavailable or failing checks.
 
-## Core Loop
+Any later relevant mutation invalidates affected evidence only; rerun the corresponding checks.
 
-1. Define the exact claim and the command or inspection that proves it.
-2. Run the narrowest sufficient check after the final relevant change.
-3. Inspect the exit status, failure count, and meaningful warnings; do not infer success from partial output.
-4. Compare the actual diff and final state with canonical acceptance.
-5. Require fresh reconciliation before completion, commit, or push.
-6. State only what the evidence proves.
-
-Any later relevant mutation invalidates affected evidence and reconciliation.
-
-## Escalation
-
-- Run broader checks when risk, cross-cutting impact, or repository instructions justify them.
-- Treat reported results as leads; inspect material changes and verify them directly.
-- Do not revert or disturb user work solely to demonstrate a failing test.
-- Report blocked, unavailable, flaky, or failing checks instead of claiming success.
-
-## Evidence
-
-- Include the verification command, result summary, and scope in the handoff.
-- Identify the canonical record and reconciliation state.
-- Distinguish verified outcomes from unverified assumptions and pre-existing failures.
+Broaden checks only when repository policy or the named risk requires it. Preserve user work and distinguish verified outcomes from assumptions or pre-existing failures.

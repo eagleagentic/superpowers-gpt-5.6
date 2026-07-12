@@ -1,23 +1,18 @@
 ---
 name: writing-plans
-description: Create mandatory durable plans. Use after any explicit/native planning and for complex, important, high-risk, dependent, cross-system, isolated, destructive, or long-running work; skip low-risk single-path work.
+description: Create a durable implementation plan for explicit durable-plan requests or complex, high-risk, cross-system, destructive, or long-running work needing resumable coordination; skip routine native planning.
 ---
 
-# Writing Plans
+# Durable Plans
 
-Any explicit or native planning makes a durable plan file mandatory. A native plan may track session progress but never substitutes for that file.
+Use a repository file only for cross-session survival or material risk and dependency coordination. A native plan alone does not require this file.
 
 1. Read the nearest `AGENTS.md`, requirements, relevant code, and repository documentation convention.
-2. Inspect `./superpowers/docs/plans/` for a plan in the same scope; otherwise create `./superpowers/docs/plans/YYYY-MM-DD-HHMMSS-01-plan-<slug>.md`. Generate the local timestamp once when opening the scope and keep the timestamp plus slug as the stable record ID.
-3. If Plan Mode forbids writes, name the plan path and create it as the first permitted repository mutation before implementation.
-4. Resolve material ambiguity, then record the smallest set of independently verifiable outcomes.
-
-Use this structure:
+2. Reuse a same-scope record or create `./superpowers/docs/plans/YYYY-MM-DD-HHMMSS-01-plan-<slug>.md`; keep that timestamp and slug stable.
+3. Resolve material ambiguity, then record the smallest set of independently verifiable outcomes.
 
 ```markdown
 # <Task title>
-
-## Plan
 
 **Goal:** <one sentence>
 **Why planning is required:** <material trigger>
@@ -28,8 +23,8 @@ Use this structure:
 - Verify: `<repo-specific command>`
 ```
 
-Keep it implementation-guiding: omit source code, routine imports, predicted output, repeated boilerplate, artificial microsteps, and per-step commits. Include exact contracts only when another outcome depends on them.
+Keep outcomes dependency-ordered and omit code, routine mechanics, predicted output, and artificial microsteps. Update the same plan only after a material requirement, scope, design, or verification-strategy change.
 
-Review once for requirement coverage, dependency order, scope creep, and unverifiable outcomes. Before continuing after material requirement, design, scope, review, or verification-strategy changes, update the same plan and preserve the original intent.
+Create it before implementation. For destructive or external work, put recovery, stop conditions, and pre-execution checks in acceptance.
 
-Do not create a plan for simple work merely to satisfy process. Once any plan exists, however, never downgrade the durable requirement. If implementation is authorized, continue through the loaded lifecycle; completion writes the matching Implementation Log in `./superpowers/docs/logs/YYYY-MM-DD-HHMMSS-02-log-<slug>.md`, reusing the plan's timestamp and slug.
+If the current mode forbids writes, name the intended path and create it only after writes are authorized. A durable plan does not automatically require a log, review, worktree, or separate completion gate; select each independently.

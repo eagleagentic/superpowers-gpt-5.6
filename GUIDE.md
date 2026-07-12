@@ -9,17 +9,17 @@ This adaptive profile is tailored for Codex CLI and the GPT-5.6 family. Skills a
 | Skill | Capability | Trigger |
 | --- | --- | --- |
 | [`brainstorming`](skills/superpowers/brainstorming/SKILL.md) | Converge requirements and design choices | Use when a design needs exploration, requirements remain ambiguous, or a behavior change has material tradeoffs. |
-| [`executing-plans`](skills/superpowers/executing-plans/SKILL.md) | Execute an existing plan inline | Use when an implementation-ready plan exists and the main agent can complete it efficiently in the current session. |
+| [`executing-plans`](skills/superpowers/executing-plans/SKILL.md) | Execute a substantial plan inline | Use when an authorized multi-step or durable plan has dependent outcomes that benefit from explicit tracking. |
 | [`finishing-a-development-branch`](skills/superpowers/finishing-a-development-branch/SKILL.md) | Complete authorized branch delivery | Use after verified implementation when the user or repository policy requires an authorized integration, push, PR, branch, or worktree action. |
 | [`receiving-code-review`](skills/superpowers/receiving-code-review/SKILL.md) | Verify and address review feedback | Use when review findings must be validated, rejected with evidence, or implemented without expanding scope. |
-| [`requesting-code-review`](skills/superpowers/requesting-code-review/SKILL.md) | Run a risk-driven review | Use when the user requests review or a change affects security, data, concurrency, public APIs, or multiple modules. |
+| [`requesting-code-review`](skills/superpowers/requesting-code-review/SKILL.md) | Run a risk-driven review | Use when the user requests review or material security, data, concurrency, public-contract, migration, or cross-module risk warrants it. |
 | [`systematic-debugging`](skills/superpowers/systematic-debugging/SKILL.md) | Find root causes with evidence | Use for a bug, failing test, or unexpected behavior whose cause has not been proven. |
-| [`test-driven-development`](skills/superpowers/test-driven-development/SKILL.md) | Protect observable behavior with tests | Use for new behavior or reproducible bug fixes when the repository has a practical automated test harness. |
+| [`test-driven-development`](skills/superpowers/test-driven-development/SKILL.md) | Implement through red-green-refactor | Use only when the user requests TDD/test-first work or repository policy requires it. |
 | [`using-git-worktrees`](skills/superpowers/using-git-worktrees/SKILL.md) | Create an isolated workspace | Use when requested or required, or when long-lived, parallel, or high-risk work materially benefits from isolation. |
 | [`using-superpowers`](skills/superpowers/using-superpowers/SKILL.md) | Route this workflow skill set | Use at the start of every conversation to select the smallest relevant skill set before responding or acting. |
-| [`verification-before-completion`](skills/superpowers/verification-before-completion/SKILL.md) | Support completion claims with fresh evidence | Use before final handoff or a success claim when no active workflow already provides the same verification gate. |
-| [`writing-implementation-logs`](skills/superpowers/writing-implementation-logs/SKILL.md) | Record a verified implementation outcome | Use once after persistent implementation and primary verification complete. |
-| [`writing-plans`](skills/superpowers/writing-plans/SKILL.md) | Produce a durable implementation plan | Use when the user requests a plan or complex work needs a resumable, cross-session handoff. |
+| [`verification-before-completion`](skills/superpowers/verification-before-completion/SKILL.md) | Gate difficult completion claims | Use for high-risk, disputed, multi-check, or previously unreliable claims when ordinary checks do not suffice. |
+| [`writing-implementation-logs`](skills/superpowers/writing-implementation-logs/SKILL.md) | Record a verified implementation outcome | Use only for a required durable record or complex long-running work needing audit or recovery. |
+| [`writing-plans`](skills/superpowers/writing-plans/SKILL.md) | Produce a durable implementation plan | Use for an explicit durable-plan request or complex, high-risk, cross-system, destructive, or long-running coordination. |
 | [`writing-skills`](skills/superpowers/writing-skills/SKILL.md) | Maintain the Codex Superpowers bundle | Use when the user names `writing-skills` or asks to maintain this bundle; use Codex's built-in `skill-creator` for general skill authoring. |
 
 ## Usage examples
@@ -40,7 +40,7 @@ I need to change the login flow. Inspect the repository, identify the risks and 
 The empty-page pagination test fails intermittently. Reproduce it, trace the root cause, make the smallest fix, and run a regression check.
 ```
 
-`systematic-debugging` drives evidence collection and hypothesis tests. Add `test-driven-development` when the repository has a practical test harness and the fix changes observable behavior.
+`systematic-debugging` drives evidence collection and hypothesis tests. Add `test-driven-development` only when the request or repository policy requires test-first work; otherwise add a focused regression test directly when practical.
 
 ### 3. I want an evidence-based review
 
@@ -70,11 +70,11 @@ The expected flow is:
 
 1. `using-superpowers` routes the request; `brainstorming` resolves only material choices such as delimiter, escaping, or output ownership.
 2. `writing-plans` records the acceptance criteria and verification strategy. Do not start implementation until the plan exists.
-3. With implementation authorized, `executing-plans` works through the outcomes. `test-driven-development` is used if the repository's test harness can exercise the export behavior.
+3. With implementation authorized, `executing-plans` works through the outcomes. Use focused tests directly unless the user or repository explicitly requires `test-driven-development`.
 4. Run focused tests and the repository's required checks. Reconcile the actual diff with the plan and acceptance criteria.
 5. `writing-implementation-logs` records the verified outcome. Use `finishing-a-development-branch` only if commit or push is authorized.
 
-If the task turns out to be a one-line, low-risk change, the same router can choose a simpler inline path instead of forcing this full sequence.
+Without the prompt's explicit durable-plan requirement, a one-line low-risk change would take the direct path instead of this sequence.
 
 ## Model selection and delegation
 
@@ -88,6 +88,7 @@ Codex Ultra provides native subagent delegation by default. This bundle intentio
 2. Do not chain design, planning, worktree, TDD, review, or branch-finishing workflows merely because they might help.
 3. Use Codex Ultra's native delegation when needed; do not restore bundle-level dispatch workflows.
 4. Scale planning and verification to risk; documentation and mechanical changes do not need a full development ceremony.
-5. Before claiming completion, provide fresh evidence proportional to the claim without repeating irrelevant checks.
+5. Native planning does not require a durable plan file, and ordinary implementations do not require an implementation log.
+6. Before claiming completion, provide fresh evidence proportional to the claim without repeating irrelevant checks.
 
 Run `bash skills/superpowers/check-context-budget.sh` to verify the skill count and context budget.

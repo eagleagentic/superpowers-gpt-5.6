@@ -1,23 +1,19 @@
 ---
 name: using-superpowers
-description: "Mandatory router. Require durable plans after any planning, concise logs after implementation, and fresh reconciliation before completion, commit, or push."
+description: "Route workflow skills by demonstrated need. Use at conversation start; keep trivial and routine work direct, escalating only for explicit requests or material complexity or risk."
 ---
 
 # Router
 
-Classify every turn:
+Select the smallest useful set:
 
-- **Conversation/read-only:** no persistent change.
-- **Simple implementation:** low-risk, reversible, one direct path.
-- **Planned work:** an explicit/native plan exists, or complexity, risk, dependencies, isolation, or duration justify one.
-- **Completion-awaiting-log:** implementation exists; verification, log, or reconciliation is stale.
+- **Read-only:** answer or inspect without lifecycle artifacts.
+- **Direct:** for trivial or routine, reversible work with a clear path, inspect, act, run focused or repository-required checks once, and report.
+- **Coordinated:** use durable planning only when dependencies, cross-system scope, uncertainty, or duration need resumable coordination.
+- **High-risk:** add isolation, review, or an explicit gate only for the security, data, destructive, public-contract, or disputed risk addressed.
 
-Select `writing-plans` for planned work. Any Codex Plan Mode or native plan makes a durable plan file mandatory. If Plan Mode forbids writes, create it as the first permitted repository mutation. Do not plan simple work merely to satisfy process.
+A file edit or tool call alone never justifies escalation. When planning helps routine work, native planning is sufficient; a native plan alone does not require a durable file. Load another workflow skill only when its description independently matches the task, not because another skill mentioned it.
 
-Before persistent mutation, read and apply [Durable Development Lifecycle](references/durable-development.md). After the whole implementation and fresh primary verification, select `writing-implementation-logs`; skip logs for read-only, plan-only, blocked, or no-diff work.
+Use `writing-implementation-logs` only for a required durable record or complex long-running work needing audit or recovery. Use `verification-before-completion` only when a separate multi-check gate adds discipline.
 
-Before completion, commit, or push, reopen the required plan (if planned) and matching log; compare both with the diff and fresh evidence.
-
-Keep active model and reasoning effort. Recommend `/model` only for material quality or cost benefit; never launch nested Codex to simulate a switch.
-
-Honor descriptions and named skills; read selected skills, inspect first, and follow higher-priority repository instructions.
+Preserve user work, obtain authority for destructive or external actions, and claim completion only from fresh evidence.
