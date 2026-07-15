@@ -7,10 +7,10 @@ description: Execute an existing plan when implementation is authorized and depe
 
 A plan's existence or approval to plan does not authorize implementation. Without implementation authority, inspect and report only.
 
-1. Read the plan, nearest `AGENTS.md`, and relevant repository state once.
-2. Map unfinished outcomes into lightweight session tracking and keep at most one in progress.
-3. Implement the minimum required change for each outcome; batch checks when that proves the same behavior more efficiently.
-4. After the final relevant change, run the plan's required checks and compare the actual diff with acceptance once.
+1. Read the plan, nearest `AGENTS.md`, and relevant repository state.
+2. Map unfinished outcomes into lightweight session tracking. Before tools, announce the first outcome; update the user only at material phase changes with the result and next outcome.
+3. Implement the minimum change per outcome; batch checks when they prove the same behavior.
+4. After the final change, run required checks and compare the diff with acceptance.
 
 Treat the plan as an outcome contract, not a transcript. Adapt mechanics when repository reality differs while preserving scope and acceptance. Update a durable plan before continuing only when a material requirement, design, or verification strategy changes.
 

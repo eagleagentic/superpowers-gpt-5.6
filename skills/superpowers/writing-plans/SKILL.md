@@ -19,7 +19,8 @@ Use a repository file only when the High-risk tier requires it or for cross-sess
 **Acceptance:** <observable completion criteria>
 
 ### Outcome N: <result>
-- Work: <what must become true>
+- Work: <requirements, named files/resources, state/data flow, and failure behavior>
+- Risks/open questions: <material privacy, security, or blocking unknowns; omit when none>
 - Verify: `<repo-specific command>`
 ```
 

@@ -15,6 +15,8 @@
 
 This repository is a Codex-native edition of [obra/superpowers](https://github.com/obra/superpowers/tree/main/skills), tailored for the GPT-5.6 family.
 
+We reviewed and optimized all 13 Superpowers skills for GPT-5.6 against OpenAI's official [prompting guidance for GPT-5.6](https://developers.openai.com/api/docs/guides/prompt-guidance-gpt-5p6). The resulting prompt stack keeps outcomes, constraints, evidence, completion criteria, approval boundaries, and validation explicit while removing unnecessary process overhead.
+
 ## Install and quick start
 
 This repository contains a bundle of 13 skills. Install each directory directly under [`skills/superpowers`](skills/superpowers) as a separate skill; the parent directory is not itself a skill.
