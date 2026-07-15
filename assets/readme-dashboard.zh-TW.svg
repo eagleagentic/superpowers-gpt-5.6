@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
   <title id="title">GPT-5.6 Superpowers 儀表板</title>
-  <desc id="desc">13 個 skills 使用 2,691 words，比 obra/superpowers 的 18,516 words 少 85.5%。每次對話經過 newcomer-safe router，強制核心紀律、選擇最少額外 skills，再以相稱的新鮮證據完成驗證。</desc>
+  <desc id="desc">13 個 runtime SKILL.md 使用 2,691 words，比 obra/superpowers 的 18,516 words 少 85.5%。每次對話經過 newcomer-safe router，強制核心紀律、選擇最少額外 skills，再以相稱的新鮮證據完成驗證。</desc>
   <defs>
     <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0b1020"/>
@@ -33,7 +33,7 @@
       <text x="143" y="194" fill="#c8d4ee" font-size="17">個 adaptive skills</text>
 
       <rect x="430" y="118" width="340" height="105" rx="16" fill="#151d35" stroke="#283657"/>
-      <text x="454" y="151" fill="#8fa0c4" font-size="13" font-weight="650" letter-spacing="1">SKILL 正文詞數</text>
+      <text x="454" y="151" fill="#8fa0c4" font-size="13" font-weight="650" letter-spacing="1">SKILL.MD 詞數</text>
       <text x="454" y="195" fill="#59d5e0" font-size="38" font-weight="760">2,691</text>
       <text x="573" y="194" fill="#c8d4ee" font-size="17">words</text>
 
@@ -57,7 +57,7 @@
       <text x="694" y="390" fill="#59d5e0" font-size="14" font-weight="700" text-anchor="end">2,691 · 14.5%</text>
       <rect x="86" y="402" width="608" height="18" rx="9" fill="#293450"/>
       <rect x="86" y="402" width="88" height="18" rx="9" fill="url(#accent)"/>
-      <text x="86" y="449" fill="#7f90b5" font-size="12">上游基準 d884ae0 · 量測日期 2026-07-13</text>
+      <text x="86" y="449" fill="#7f90b5" font-size="12">上游基準 d884ae0 · 量測日期 2026-07-15</text>
     </g>
 
     <g>

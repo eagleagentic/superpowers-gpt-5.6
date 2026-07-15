@@ -17,6 +17,20 @@ This repository is a Codex-native edition of [obra/superpowers](https://github.c
 
 We reviewed and optimized all 13 Superpowers skills for GPT-5.6 against OpenAI's official [prompting guidance for GPT-5.6](https://developers.openai.com/api/docs/guides/prompt-guidance-gpt-5p6). The resulting prompt stack keeps outcomes, constraints, evidence, completion criteria, approval boundaries, and validation explicit while removing unnecessary process overhead.
 
+### Current measured profile
+
+| Metric | Current value |
+| --- | ---: |
+| Runtime skills | 13 |
+| Runtime `SKILL.md` words | 2,691 |
+| Always-on `using-superpowers` router | 179 words |
+| On-demand support Markdown | 1,655 words |
+| Skill description metadata | 2,165 characters |
+| Pinned upstream `SKILL.md` words | 18,516 |
+| Runtime-word reduction | 85.5% |
+
+Measured on 2026-07-15 with the repository context-budget validator and `wc -w`; the upstream baseline remains pinned to commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills).
+
 ## Install and quick start
 
 This repository contains a bundle of 13 skills. Install each directory directly under [`skills/superpowers`](skills/superpowers) as a separate skill; the parent directory is not itself a skill.
@@ -77,7 +91,7 @@ The symlinks continue to point at the updated skill directories.
 
 Our team initially used obra/superpowers directly. In our day-to-day Codex CLI and GPT-5.6 family workflows, we observed noticeably slower iteration: mandatory skill activation, longer instructions, and fixed process chains added coordination latency and token overhead. This is an account of our practical experience in those workflows, not a general latency benchmark across every platform.
 
-We created this tailored edition to keep the upstream engineering disciplines that improve outcomes while fitting the capabilities Codex already provides natively. Its instructions are compressed, and its router enforces a lightweight core loop for every non-mechanical implementation while loading extra process skills only when risk justifies them. The resulting skill bodies contain **2,691 words versus 18,516 upstream—a reduction of 85.5%**.
+We created this tailored edition to keep the upstream engineering disciplines that improve outcomes while fitting the capabilities Codex already provides natively. Its instructions are compressed, and its router enforces a lightweight core loop for every non-mechanical implementation while loading extra process skills only when risk justifies them. The 13 runtime `SKILL.md` files contain **2,691 words versus 18,516 upstream—a reduction of 85.5%**.
 
 > **The key difference:** `using-superpowers` still starts with every conversation. It enforces a mandatory lightweight implementation loop—not a universal durable-artifact chain.
 
@@ -91,7 +105,7 @@ We created this tailored edition to keep the upstream engineering disciplines th
 
 | Lean context | Lower coordination cost | Safer boundaries |
 | :--- | :--- | :--- |
-| Uses 2,691 words across 13 skill bodies—85.5% fewer than upstream. | Keeps mandatory core discipline inline; durable artifacts remain risk-based. | Preserves user changes and requires authority for destructive or externally visible actions. |
+| Uses 2,691 words across 13 runtime `SKILL.md` files—85.5% fewer than upstream. | Keeps mandatory core discipline inline; durable artifacts remain risk-based. | Preserves user changes and requires authority for destructive or externally visible actions. |
 
 ## Compared with obra/superpowers
 
@@ -107,7 +121,7 @@ We created this tailored edition to keep the upstream engineering disciplines th
 | Verification | Focused checks and final diff review are mandatory; separate gates are risk-based | Universal completion gate |
 | Target environment | Codex CLI with the GPT-5.6 family | Multiple agent harnesses |
 
-The comparison is pinned to upstream commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills). Counts were measured with `wc -w` across the 13 `SKILL.md` files on 2026-07-13: **2,691 words here versus 18,516 upstream**.
+The comparison is pinned to upstream commit [`d884ae0`](https://github.com/obra/superpowers/tree/d884ae04edebef577e82ff7c4e143debd0bbec99/skills). Counts were remeasured with `wc -w` across the 13 runtime `SKILL.md` files on 2026-07-15: **2,691 words here versus 18,516 upstream**.
 
 ## Explore the skills
 
